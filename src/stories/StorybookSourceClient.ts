@@ -1,22 +1,21 @@
-import { Page, SourceClient, Thread } from '../client'
+import { createDelayedPromise } from '../../test/utils'
+import { ListThreadParams, Page, SourceClient, Thread } from '../client'
 
 export class StorybookSourceClient extends SourceClient {
   constructor() {
     super('', '')
   }
 
-  public listThreads(): Promise<Page<Thread>> {
-    return Promise.resolve({
-      data: [
-        {
-          id: '123',
-          subject: 'Test Subject',
-          last_message: {
-            text: 'This is the preview of the message',
-            sent_at: new Date().toISOString(),
-          },
+  public listThreads(params?: ListThreadParams): Promise<Page<Thread>> {
+    return createDelayedPromise(2500, {
+      data: new Array(20).fill(0).map((_, i) => ({
+        id: `thr_${params?.starting_after ?? ''}-${i}`,
+        subject: 'Test Subject' + i,
+        last_message: {
+          text: 'This is the preview of the message',
+          sent_at: new Date().toISOString(),
         },
-      ],
+      })),
       has_more: true,
     })
   }

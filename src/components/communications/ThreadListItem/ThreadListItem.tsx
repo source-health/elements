@@ -1,17 +1,30 @@
-import React, { FunctionComponent, useCallback, useMemo } from 'react'
+import React, { ComponentType, FunctionComponent, useCallback, useMemo } from 'react'
 
 import { Thread } from '../../../client'
 import { useClassFactory } from '../../../hooks'
-import { Callback } from '../../../types/callback'
+import { Callback } from '../../../types'
+import { Avatar, AvatarProps } from '../../Avatar'
 
 export interface ThreadListItemProps {
+  /**
+   * The thread that should be rendered in this component
+   */
   readonly thread: Thread
+
+  /**
+   * Callback to invoke when the thread is clicked/tapped
+   */
   readonly onThreadSelected?: Callback<Thread>
+  /**
+   * Custom Avatar component override
+   */
+  readonly AvatarComponent?: ComponentType<AvatarProps>
 }
 
 export const ThreadListItem: FunctionComponent<ThreadListItemProps> = ({
   onThreadSelected,
   thread,
+  AvatarComponent = Avatar,
 }) => {
   const className = useClassFactory('comms', 'thread-list-item')
   const handleClick = useCallback(() => onThreadSelected?.(thread), [thread])
@@ -22,11 +35,16 @@ export const ThreadListItem: FunctionComponent<ThreadListItemProps> = ({
 
   return (
     <div className={className()} onClick={handleClick}>
-      <div className={className('topline')}>
-        <span className={className('topic')}>{thread.subject ?? '(no subject)'}</span>
-        <span className={className('last-message')}>{parsedDate.toUTCString()}</span>
+      <div className={className('image')}>
+        <AvatarComponent size={24} />
       </div>
-      <div className={className('preview')}>{thread.last_message.text}</div>
+      <div className={className('content')}>
+        <div className={className('topline')}>
+          <span className={className('topic')}>{thread.subject ?? '(no subject)'}</span>
+          <span className={className('last-message')}>{parsedDate.toUTCString()}</span>
+        </div>
+        <div className={className('preview')}>{thread.last_message.text}</div>
+      </div>
     </div>
   )
 }

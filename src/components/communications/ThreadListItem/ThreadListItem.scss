@@ -1,16 +1,29 @@
 .source-comms__thread-list-item {
-  padding: 0.5rem;
+  padding: 0.75rem;
   border-radius: 0.25rem;
   cursor: default;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  
+  &--image {
+    margin-right: 0.75rem;
+  }
 
   &--topline {
     display: flex;
     align-items: center;
   }
 
+  &--content {
+    flex: 1;
+    min-width: 0;
+  }
+
   &--topic {
     flex: 1;
     font-weight: medium;
+    min-width: 0;
   }
 
   &--last-message {
@@ -22,6 +35,7 @@
     font-size: 0.825rem;
     margin-top: 0.25rem;
     color: #888;
+    min-width: 0;
   }
 
   &:hover {

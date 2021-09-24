@@ -1,8 +1,11 @@
-import React, { ComponentType, FunctionComponent } from 'react'
+import React, { ComponentType, FunctionComponent, useCallback } from 'react'
 
 import { Thread } from '../../../client'
-import { useSourceData } from '../../../hooks'
-import { Callback } from '../../../types/callback'
+import { usePaginatedList } from '../../../hooks'
+import { Callback } from '../../../types'
+import { AvatarProps } from '../../Avatar'
+import { LoadingProps } from '../../Loading'
+import { InfiniteScrollPaginator } from '../../Paginator'
 import { ThreadListContainer, ThreadListContainerProps } from '../ThreadListContainer'
 import { ThreadListItem, ThreadListItemProps } from '../ThreadListItem'
 
@@ -28,6 +31,14 @@ export interface ThreadListProps {
    * Callback that will be invoked when a thread is tapped/clicked in the interface
    */
   readonly onThreadSelected?: Callback<Thread>
+  /**
+   * Component that is responsible for rendering user avatars
+   */
+  readonly AvatarComponent?: ComponentType<AvatarProps>
+  /**
+   * Component that is responsible for showing a loading state
+   */
+  readonly LoadingComponent?: ComponentType<LoadingProps>
 
   /**
    * Component that is responsible for rendering all of the threads
@@ -43,18 +54,36 @@ export interface ThreadListProps {
 export const ThreadList: FunctionComponent<ThreadListProps> = ({
   filters,
   onThreadSelected,
+  AvatarComponent,
+  LoadingComponent,
   ContainerComponent: Container = ThreadListContainer,
   ItemComponent: Item = ThreadListItem,
 }) => {
-  const { data, loading } = useSourceData((client) => client.listThreads(filters), [filters])
-  const threads = data?.data ?? []
+  const { data, isLoading, isRefreshing, hasNextPage, fetchNextPage } = usePaginatedList(
+    (client, params) =>
+      client.listThreads({
+        ...filters,
+        ...params,
+      }),
+    [filters],
+  )
 
   return (
-    <Container threads={threads}>
-      {loading && <div>Loading...</div>}
-      {threads.map((thread) => (
-        <Item key={thread.id} thread={thread} onThreadSelected={onThreadSelected} />
-      ))}
+    <Container loading={isRefreshing} threads={data} LoadingComponent={LoadingComponent}>
+      <InfiniteScrollPaginator
+        isLoading={isLoading}
+        hasNextPage={hasNextPage}
+        fetchNextPage={fetchNextPage}
+      >
+        {data.map((thread) => (
+          <Item
+            key={thread.id}
+            thread={thread}
+            onThreadSelected={onThreadSelected}
+            AvatarComponent={AvatarComponent}
+          />
+        ))}
+      </InfiniteScrollPaginator>
     </Container>
   )
 }

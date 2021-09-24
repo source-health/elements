@@ -27,7 +27,7 @@ describe('ThreadList', () => {
     })
 
     // Make sure the loading indicator shows
-    const loadingElement = await container.findByText('Loading...')
+    const loadingElement = await container.findByTestId('loading-indicator')
 
     // Advance the timer to the promise completion
     jest.advanceTimersByTime(50)

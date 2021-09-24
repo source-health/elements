@@ -1,28 +1,32 @@
-import React, { FunctionComponent } from 'react'
+import React, { ComponentType, FunctionComponent } from 'react'
 
 import { Thread } from '../../../client'
-import { useClassFactory, useInfiniteScroll } from '../../../hooks'
+import { useClassFactory } from '../../../hooks'
+import { Loading as DefaultLoading, LoadingProps } from '../../Loading'
 
 export interface ThreadListContainerProps {
+  /**
+   * Will be true when the list is currently loading
+   */
+  readonly loading: boolean
+
+  /**
+   * List of threads we know about
+   */
   readonly threads: Thread[]
+
+  /**
+   * Override the loading component with a custom one
+   */
+  readonly LoadingComponent?: ComponentType<LoadingProps>
 }
 
-export const ThreadListContainer: FunctionComponent<ThreadListContainerProps> = ({ children }) => {
+export const ThreadListContainer: FunctionComponent<ThreadListContainerProps> = ({
+  children,
+  loading,
+  LoadingComponent: Loading = DefaultLoading,
+}) => {
   const className = useClassFactory('comms', 'thread-list-container')
-  const [containerRef, scrollableRef] = useInfiniteScroll({
-    loading: false,
-    hasNextPage: true,
-    rootMargin: '0px 0px 50px 0px',
-    onLoadMore: () => {
-      console.log('load more')
-    },
-  })
 
-  return (
-    <div ref={scrollableRef} className={className()}>
-      {children}
-
-      <div ref={containerRef} />
-    </div>
-  )
+  return <div className={className()}>{loading ? <Loading /> : children}</div>
 }
