@@ -20,7 +20,7 @@ export function useSourceContext(): SourceContextValue {
   const context = useContext(SourceContext)
   if (!context) {
     throw new Error(
-      'Could not find SourceeElements context; You need to wrap your application in a <SourceElements> provider.',
+      'Could not find SourceElements context; You need to wrap your application in a <SourceElements> provider.',
     )
   }
 
