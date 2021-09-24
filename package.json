@@ -7,7 +7,10 @@
   "license": "MIT",
   "scripts": {
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "check:lint": "eslint --ext .ts,.tsx,.js src",
+    "check:typescript": "tsc --noEmit",
+    "test": "jest"
   },
   "dependencies": {},
   "devDependencies": {
