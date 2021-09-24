@@ -1,7 +1,7 @@
 import React, { ComponentType, FunctionComponent } from 'react'
 
 import { Thread } from '../../../client'
-import { useSourceData } from '../../../hooks/useSourceData'
+import { useSourceData } from '../../../hooks'
 import { Callback } from '../../../types/callback'
 import { ThreadListContainer, ThreadListContainerProps } from '../ThreadListContainer'
 import { ThreadListItem, ThreadListItemProps } from '../ThreadListItem'

@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useCallback, useMemo } from 'react'
 
 import { Thread } from '../../../client'
-import { useClassFactory } from '../../../hooks/useClassFactory'
+import { useClassFactory } from '../../../hooks'
 import { Callback } from '../../../types/callback'
 
 export interface ThreadListItemProps {

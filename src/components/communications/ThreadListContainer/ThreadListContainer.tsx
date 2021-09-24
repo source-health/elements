@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react'
 
 import { Thread } from '../../../client'
-import { useClassFactory } from '../../../hooks/useClassFactory'
-import { useInfiniteScroll } from '../../../hooks/useRefEvent'
+import { useClassFactory, useInfiniteScroll } from '../../../hooks'
 
 export interface ThreadListContainerProps {
   readonly threads: Thread[]
