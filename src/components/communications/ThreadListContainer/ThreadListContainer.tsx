@@ -22,7 +22,7 @@ export const ThreadListContainer: FunctionComponent<ThreadListContainerProps> = 
     <div ref={scrollableRef} className={className()}>
       {children}
 
-      <div ref={containerRef}>Loading More...</div>
+      <div ref={containerRef} />
     </div>
   )
 }

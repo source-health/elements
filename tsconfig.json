@@ -12,5 +12,5 @@
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true
   },
-  "include": ["./src", "stories"]
+  "include": ["./src", "./test"]
 }

@@ -46,11 +46,12 @@ export const ThreadList: FunctionComponent<ThreadListProps> = ({
   ContainerComponent: Container = ThreadListContainer,
   ItemComponent: Item = ThreadListItem,
 }) => {
-  const { data } = useSourceData((client) => client.listThreads(filters), [filters])
+  const { data, loading } = useSourceData((client) => client.listThreads(filters), [filters])
   const threads = data?.data ?? []
 
   return (
     <Container threads={threads}>
+      {loading && <div>Loading...</div>}
       {threads.map((thread) => (
         <Item key={thread.id} thread={thread} onThreadSelected={onThreadSelected} />
       ))}

@@ -1,12 +1,12 @@
 import { Thread } from '.'
 
-interface ListThreadParams {
+export interface ListThreadParams {
   readonly status?: 'closed' | 'awaiting_care_team' | 'awaiting_member'
   readonly starting_after?: string
   readonly ending_before?: string
 }
 
-type Page<T> = {
+export type Page<T> = {
   data: T[]
   has_more: boolean
 }
