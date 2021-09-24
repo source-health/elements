@@ -1,0 +1,30 @@
+.source-comms__thread-list-item {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  cursor: default;
+
+  &--topline {
+    display: flex;
+    align-items: center;
+  }
+
+  &--topic {
+    flex: 1;
+    font-weight: medium;
+  }
+
+  &--last-message {
+    font-size: 0.825rem;
+    color: #888;
+  }
+
+  &--preview {
+    font-size: 0.825rem;
+    margin-top: 0.25rem;
+    color: #888;
+  }
+
+  &:hover {
+    background: #f6f6f6;
+  }
+}

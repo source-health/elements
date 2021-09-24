@@ -1,0 +1,56 @@
+name: Build and Test
+
+on: push
+
+jobs:
+  # Lint - happens on all branches
+  lint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-eslint-${{ hashFiles('**/yarn.lock') }}
+      - name: Install modules
+        run: yarn --frozen-lockfile
+      - name: Run eslint
+        run: yarn check:lint
+
+  # Compile: (all branches) build the whole app cleanly to make sure our typescript is valid.
+  compile:
+    name: Compile
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - name: Register Problem Matcher
+        run: echo "##[add-matcher].github/matchers/tsc.json"
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-build-${{ hashFiles('**/yarn.lock') }}
+      - name: Install modules
+        run: yarn
+      - name: Run tsc
+        run: yarn check:typescript
+
+  # Run the jest tests (all branches)
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '15'
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-test-runner-${{ hashFiles('**/yarn.lock') }}
+      - name: Install modules
+        run: yarn --frozen-lockfile
+      - name: Run tests
+        run: yarn test
