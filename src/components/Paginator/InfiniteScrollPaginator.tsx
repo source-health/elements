@@ -37,9 +37,11 @@ export const InfiniteScrollPaginator: FunctionComponent<InfiniteScrollPaginatorP
   return (
     <div>
       {children}
-      <div ref={sentinelRef} style={{ padding: '10px' }}>
-        {isLoading && <Loading />}
-      </div>
+      {hasNextPage && (
+        <div ref={sentinelRef} style={{ padding: '10px' }}>
+          {isLoading && <Loading />}
+        </div>
+      )}
     </div>
   )
 }

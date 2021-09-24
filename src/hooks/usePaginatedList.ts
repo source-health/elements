@@ -10,7 +10,6 @@ interface Identifiable {
 
 interface PaginatedState<T extends Identifiable> {
   data: T[]
-  hasPreviousPage: boolean
   hasNextPage: boolean
   isLoading: boolean
   isRefreshing: boolean
@@ -19,10 +18,8 @@ interface PaginatedState<T extends Identifiable> {
 
 interface PaginatedList<T extends Identifiable> extends PaginatedState<T> {
   data: T[]
-  hasPreviousPage: boolean
   hasNextPage: boolean
   fetchNextPage: Callback
-  fetchPreviousPage: Callback
   reset: Callback
   isLoading: boolean
   error: Error | null
@@ -35,7 +32,6 @@ export function usePaginatedList<T extends Identifiable>(
   const client = useSourceClient()
   const [state, setState] = useState<PaginatedState<T>>({
     data: [],
-    hasPreviousPage: false,
     hasNextPage: false,
     isLoading: false,
     isRefreshing: false,
@@ -73,16 +69,6 @@ export function usePaginatedList<T extends Identifiable>(
     )
   }
 
-  const fetchPreviousPage = useCallback(() => {
-    if (!state.data.length) {
-      return Promise.resolve()
-    }
-
-    fetchMore({
-      ending_before: state.data[0].id,
-    })
-  }, [client, state.data, ...dependencies])
-
   const fetchNextPage = useCallback(() => {
     if (!state.data.length) {
       return Promise.resolve()
@@ -101,7 +87,6 @@ export function usePaginatedList<T extends Identifiable>(
 
   return {
     ...state,
-    fetchPreviousPage,
     fetchNextPage,
     reset,
   }

@@ -1,4 +1,4 @@
-import React, { ComponentType, FunctionComponent, useCallback } from 'react'
+import React, { ComponentType, FunctionComponent } from 'react'
 
 import { Thread } from '../../../client'
 import { usePaginatedList } from '../../../hooks'
