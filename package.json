@@ -1,0 +1,63 @@
+{
+  "name": "@source-health/elements-react",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:source-health/elements.git",
+  "author": "Colin Morelli <colin.morelli@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@storybook/addon-actions": "^6.3.8",
+    "@storybook/addon-contexts": "^5.3.21",
+    "@storybook/addon-essentials": "^6.3.8",
+    "@storybook/addon-links": "^6.3.8",
+    "@storybook/preset-scss": "^1.0.3",
+    "@storybook/react": "^6.3.8",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.0",
+    "@testing-library/react-hooks": "^7.0.2",
+    "@types/react": "^17.0.24",
+    "@types/react-dom": "^17.0.9",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "babel-loader": "^8.2.2",
+    "eslint": "^7.32.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-prettier": "^3.4.1",
+    "jest": "^27.2.1",
+    "prettier": "^2.3.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "sass": "^1.42.1",
+    "sass-loader": "^10",
+    "style-loader": "^2.0.0",
+    "ts-jest": "^27.0.5",
+    "typescript": "^4.3.5"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2"
+  },
+  "jest": {
+    "preset": "ts-jest/presets/js-with-ts",
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/setup.js"
+    ],
+    "testEnvironment": "jsdom",
+    "globals": {
+      "ts-jest": {
+        "diagnostics": {
+          "ignoreCodes": [
+            151001
+          ]
+        }
+      },
+      "_VERSION": true
+    }
+  }
+}
