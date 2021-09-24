@@ -8,6 +8,7 @@ export interface PaginationParams {
 
 export interface ListThreadParams extends PaginationParams {
   status?: 'closed' | 'awaiting_care_team' | 'awaiting_member'
+  expand?: string | string[]
 }
 
 export type Page<T> = {

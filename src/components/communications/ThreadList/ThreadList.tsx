@@ -5,7 +5,7 @@ import { usePaginatedList } from '../../../hooks'
 import { Callback } from '../../../types'
 import { AvatarProps } from '../../Avatar'
 import { LoadingProps } from '../../Loading'
-import { InfiniteScrollPaginator } from '../../Paginator'
+import { InfiniteScrollPaginator, InfiniteScrollPaginatorProps } from '../../Paginator'
 import { ThreadListContainer, ThreadListContainerProps } from '../ThreadListContainer'
 import { ThreadListItem, ThreadListItemProps } from '../ThreadListItem'
 
@@ -49,6 +49,11 @@ export interface ThreadListProps {
    * Component that is responsible for rendering a single thread in the list
    */
   readonly ItemComponent?: ComponentType<ThreadListItemProps>
+
+  /**
+   * Component that is responsible for loading more channels as needed
+   */
+  readonly PaginatorComponent?: ComponentType<InfiniteScrollPaginatorProps>
 }
 
 export const ThreadList: FunctionComponent<ThreadListProps> = ({
@@ -56,24 +61,27 @@ export const ThreadList: FunctionComponent<ThreadListProps> = ({
   onThreadSelected,
   AvatarComponent,
   LoadingComponent,
+  PaginatorComponent: Paginator = InfiniteScrollPaginator,
   ContainerComponent: Container = ThreadListContainer,
   ItemComponent: Item = ThreadListItem,
 }) => {
   const { data, isLoading, isRefreshing, hasNextPage, fetchNextPage } = usePaginatedList(
-    (client, params) =>
+    (client, paging) =>
       client.listThreads({
         ...filters,
-        ...params,
+        ...paging,
+        expand: ['assignee', 'last_message.sender'],
       }),
     [filters],
   )
 
   return (
     <Container loading={isRefreshing} threads={data} LoadingComponent={LoadingComponent}>
-      <InfiniteScrollPaginator
+      <Paginator
         isLoading={isLoading}
         hasNextPage={hasNextPage}
         fetchNextPage={fetchNextPage}
+        LoadingComponent={LoadingComponent}
       >
         {data.map((thread) => (
           <Item
@@ -83,7 +91,7 @@ export const ThreadList: FunctionComponent<ThreadListProps> = ({
             AvatarComponent={AvatarComponent}
           />
         ))}
-      </InfiniteScrollPaginator>
+      </Paginator>
     </Container>
   )
 }

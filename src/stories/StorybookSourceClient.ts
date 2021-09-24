@@ -14,8 +14,10 @@ export class StorybookSourceClient extends SourceClient {
       data: new Array(20).fill(0).map((_, i) => ({
         id: `thr_${parsedStartId + i}`,
         subject: `Thread ${parsedStartId + i} Subject`,
+        assignee: '',
         last_message: {
           text: 'This is the preview of the message',
+          sender: '',
           sent_at: new Date().toISOString(),
         },
       })),

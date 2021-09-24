@@ -1,24 +1,29 @@
-import React, { FunctionComponent } from 'react'
+import React, { ComponentType, FunctionComponent } from 'react'
 
-import { useInfiniteScroll } from '../..'
+import { useInfiniteScroll } from '../../hooks'
 import { Callback } from '../../types'
-import { Loading } from '../Loading'
+import { Loading, LoadingProps } from '../Loading'
 
 export interface InfiniteScrollPaginatorProps {
   /**
-   *
+   * Boolean indicating whether or not there is a next page
    */
   hasNextPage: boolean
 
   /**
-   *
+   * Function to call when we want to load another page
    */
   fetchNextPage: Callback
 
   /**
-   *
+   * Boolean indicating if another page is currently loading
    */
   isLoading: boolean
+
+  /**
+   * Override the loading component
+   */
+  LoadingComponent?: ComponentType<LoadingProps>
 }
 
 export const InfiniteScrollPaginator: FunctionComponent<InfiniteScrollPaginatorProps> = ({
@@ -26,6 +31,7 @@ export const InfiniteScrollPaginator: FunctionComponent<InfiniteScrollPaginatorP
   hasNextPage,
   fetchNextPage,
   isLoading,
+  LoadingComponent = Loading,
 }) => {
   const [sentinelRef] = useInfiniteScroll({
     hasNextPage,
@@ -39,7 +45,7 @@ export const InfiniteScrollPaginator: FunctionComponent<InfiniteScrollPaginatorP
       {children}
       {hasNextPage && (
         <div ref={sentinelRef} style={{ padding: '10px' }}>
-          {isLoading && <Loading />}
+          {isLoading && <LoadingComponent />}
         </div>
       )}
     </div>
