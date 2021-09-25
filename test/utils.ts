@@ -48,8 +48,12 @@ export function createElementsWrapper(): [FunctionComponent<unknown>, Mock<Sourc
  * @param data Data that should be provided after the delay
  * @returns a promise that will be resolved after {delay}ms
  */
-export function createDelayedPromise<T>(delay: number, data: T): Promise<T> {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(data), delay)
+export function createDelayedPromise<T>(delay: number, data: T | Error): Promise<T> {
+  return new Promise((resolve, reject) => {
+    if (data instanceof Error) {
+      setTimeout(() => reject(data), delay)
+    } else {
+      setTimeout(() => resolve(data), delay)
+    }
   })
 }

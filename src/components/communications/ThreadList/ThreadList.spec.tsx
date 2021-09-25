@@ -36,6 +36,18 @@ describe('ThreadList', () => {
     await waitForElementToBeRemoved(loadingElement)
   })
 
+  it('should show an error message when failing', async () => {
+    jest.useFakeTimers()
+    client.listThreads.mockReturnValue(Promise.reject(new Error('Unable to load')))
+
+    const container = render(<ThreadList />, {
+      wrapper,
+    })
+
+    // Make sure the loading indicator shows
+    expect(await container.findByText('Error: Unable to load')).not.toBeNull()
+  })
+
   it('should render all returned threads', async () => {
     const thread1: Thread = {
       id: '123',
