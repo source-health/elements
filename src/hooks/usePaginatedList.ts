@@ -25,8 +25,13 @@ interface PaginatedList<T extends Identifiable> extends PaginatedState<T> {
   error: Error | null
 }
 
+export interface UsePaginatedListArgs<T extends Identifiable> {
+  fetch: (client: SourceClient, params: PaginationParams) => Promise<Page<T>>
+  isReversed?: boolean
+}
+
 export function usePaginatedList<T extends Identifiable>(
-  callback: (client: SourceClient, params: PaginationParams) => Promise<Page<T>>,
+  { fetch, isReversed }: UsePaginatedListArgs<T>,
   dependencies: unknown[] = [],
 ): PaginatedList<T> {
   const client = useSourceClient()
@@ -47,13 +52,19 @@ export function usePaginatedList<T extends Identifiable>(
       isRefreshing: isRefreshing,
     }))
 
-    return callback(client, params ?? {}).then(
+    return fetch(client, params ?? {}).then(
       (response) => {
         setState((state) => ({
           ...state,
           isLoading: false,
           isRefreshing: false,
-          data: isRefreshing ? response.data : [...state.data, ...response.data],
+          data: isRefreshing
+            ? isReversed
+              ? response.data.reverse()
+              : response.data
+            : isReversed
+            ? [...response.data.reverse(), ...state.data]
+            : [...state.data, ...response.data],
           hasNextPage: response.has_more,
           error: null,
         }))
@@ -75,9 +86,9 @@ export function usePaginatedList<T extends Identifiable>(
     }
 
     fetchMore({
-      starting_after: state.data[state.data.length - 1].id,
+      starting_after: isReversed ? state.data[0].id : state.data[state.data.length - 1].id,
     })
-  }, [client, state.data, ...dependencies])
+  }, [client, state.data, isReversed, ...dependencies])
 
   const reset = useCallback(() => fetchMore(), dependencies)
 

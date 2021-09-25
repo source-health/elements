@@ -1,2 +1,4 @@
-export * from './Thread'
 export * from './SourceClient'
+
+export * from './Message'
+export * from './Thread'

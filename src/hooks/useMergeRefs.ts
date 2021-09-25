@@ -1,0 +1,50 @@
+import { MutableRefObject, Ref, useMemo } from 'react'
+
+type ReactRef<T> = Ref<T> | MutableRefObject<T>
+
+function assignRef<T = any>(ref: ReactRef<T> | undefined, value: T) { // eslint-disable-line
+  if (ref === null) {
+    return
+  }
+
+  if (typeof ref === 'function') {
+    ref(value)
+    return
+  }
+
+  try {
+    // eslint-disable-next-line
+    // @ts-ignore
+    ref.current = value
+  } catch (error) {
+    throw new Error(`Cannot assign value '${value}' to ref '${ref}'`)
+  }
+}
+
+/**
+ * React hook that merges react refs into a single memoized function
+ *
+ * @example
+ * import React from "react";
+ * import { useMergeRefs } from `@chakra-ui/hooks`;
+ *
+ * const Component = React.forwardRef((props, ref) => {
+ *   const internalRef = React.useRef();
+ *   return <div {...props} ref={useMergeRefs(internalRef, ref)} />;
+ * });
+ */
+export function useMergeRefs<T>(...refs: (ReactRef<T> | undefined)[]): Ref<T> {
+  return useMemo(() => {
+    if (refs.every((ref) => ref === null)) {
+      return null
+    }
+
+    return (node: T) => {
+      refs.forEach((ref) => {
+        if (ref) {
+          assignRef(ref, node)
+        }
+      })
+    }
+  }, refs)
+}

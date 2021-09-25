@@ -1,0 +1,52 @@
+.source-comms__message {
+  font-size: 0.875rem;
+  margin: 0.25rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  &:not(.-group-prev) {
+    margin-top: 0.75rem;
+  }
+
+  &:not(.-group-next) {
+    margin-bottom: 0.75rem;
+  }
+
+  &--sender {
+    font-weight: 600;
+    opacity: 0.5;
+    font-size: 0.75rem;
+    padding: 0 0.75rem;
+    margin: 0.125rem 0;
+  }
+
+  &--content {
+    background: #f6f6f6;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    display: inline-flex;
+  }
+
+  &.-group-prev &--sender {
+    display: none;
+  }
+
+  &.-group-prev &--content {
+    border-top-left-radius: 0.125rem;
+    border-top-left-radius: 0.125rem;
+  }
+
+  &.-group-next &--content {
+    border-bottom-left-radius: 0.125rem;
+  }
+
+  &.-outgoing {
+    align-items: flex-end;
+  }
+
+  &.-outgoing &--content {
+    background-color: green;
+    color: white;
+  }
+}
