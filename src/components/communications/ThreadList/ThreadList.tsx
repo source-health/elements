@@ -4,7 +4,7 @@ import { Thread } from '../../../client'
 import { usePaginatedList } from '../../../hooks'
 import { Callback } from '../../../types'
 import { AvatarProps } from '../../Avatar'
-import { LoadingProps } from '../../Loading'
+import { LoadingErrorProps, LoadingProps } from '../../Loading'
 import { InfiniteScrollPaginator, InfiniteScrollPaginatorProps } from '../../Paginator'
 import { ThreadListContainer, ThreadListContainerProps } from '../ThreadListContainer'
 import { ThreadListItem, ThreadListItemProps } from '../ThreadListItem'
@@ -13,47 +13,54 @@ interface ThreadListFilters {
   /**
    * Only show threads for the given member
    */
-  readonly member?: string
+  member?: string
 
   /**
    * Only show threads in the given status
    */
-  readonly status?: 'closed' | 'awaiting_care_team' | 'awaiting_member'
+  status?: 'closed' | 'awaiting_care_team' | 'awaiting_member'
 }
 
 export interface ThreadListProps {
   /**
    * Optional list of filters to pass to the thread list API call
    */
-  readonly filters?: ThreadListFilters
+  filters?: ThreadListFilters
 
   /**
    * Callback that will be invoked when a thread is tapped/clicked in the interface
    */
-  readonly onThreadSelected?: Callback<Thread>
+  onThreadSelected?: Callback<Thread>
+
   /**
    * Component that is responsible for rendering user avatars
    */
-  readonly AvatarComponent?: ComponentType<AvatarProps>
+  AvatarComponent?: ComponentType<AvatarProps>
+
   /**
    * Component that is responsible for showing a loading state
    */
-  readonly LoadingComponent?: ComponentType<LoadingProps>
+  LoadingComponent?: ComponentType<LoadingProps>
+
+  /**
+   * Component that is responsible for showing a a looading error
+   */
+  LoadingErrorComponent?: ComponentType<LoadingErrorProps>
 
   /**
    * Component that is responsible for rendering all of the threads
    */
-  readonly ContainerComponent?: ComponentType<ThreadListContainerProps>
+  ContainerComponent?: ComponentType<ThreadListContainerProps>
 
   /**
    * Component that is responsible for rendering a single thread in the list
    */
-  readonly ItemComponent?: ComponentType<ThreadListItemProps>
+  ItemComponent?: ComponentType<ThreadListItemProps>
 
   /**
    * Component that is responsible for loading more channels as needed
    */
-  readonly PaginatorComponent?: ComponentType<InfiniteScrollPaginatorProps>
+  PaginatorComponent?: ComponentType<InfiniteScrollPaginatorProps>
 }
 
 export const ThreadList: FunctionComponent<ThreadListProps> = ({
@@ -61,11 +68,12 @@ export const ThreadList: FunctionComponent<ThreadListProps> = ({
   onThreadSelected,
   AvatarComponent,
   LoadingComponent,
+  LoadingErrorComponent,
   PaginatorComponent: Paginator = InfiniteScrollPaginator,
   ContainerComponent: Container = ThreadListContainer,
   ItemComponent: Item = ThreadListItem,
 }) => {
-  const { data, isLoading, isRefreshing, hasNextPage, fetchNextPage } = usePaginatedList(
+  const { data, error, isLoading, isRefreshing, hasNextPage, fetchNextPage } = usePaginatedList(
     (client, paging) =>
       client.listThreads({
         ...filters,
@@ -76,7 +84,13 @@ export const ThreadList: FunctionComponent<ThreadListProps> = ({
   )
 
   return (
-    <Container loading={isRefreshing} threads={data} LoadingComponent={LoadingComponent}>
+    <Container
+      loading={isRefreshing}
+      error={error}
+      threads={data}
+      LoadingComponent={LoadingComponent}
+      LoadingErrorComponent={LoadingErrorComponent}
+    >
       <Paginator
         isLoading={isLoading}
         hasNextPage={hasNextPage}

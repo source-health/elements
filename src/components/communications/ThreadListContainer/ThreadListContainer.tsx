@@ -2,31 +2,51 @@ import React, { ComponentType, FunctionComponent } from 'react'
 
 import { Thread } from '../../../client'
 import { useClassFactory } from '../../../hooks'
-import { Loading as DefaultLoading, LoadingProps } from '../../Loading'
+import { Loading, LoadingError, LoadingErrorProps, LoadingProps } from '../../Loading'
 
 export interface ThreadListContainerProps {
   /**
    * Will be true when the list is currently loading
    */
-  readonly loading: boolean
+  loading: boolean
+
+  /**
+   * Error encountered when loading, if anys
+   */
+  error: Error | null
 
   /**
    * List of threads we know about
    */
-  readonly threads: Thread[]
+  threads: Thread[]
 
   /**
    * Override the loading component with a custom one
    */
-  readonly LoadingComponent?: ComponentType<LoadingProps>
+  LoadingComponent?: ComponentType<LoadingProps>
+
+  /**
+   * Override the component that renders an error message
+   */
+  LoadingErrorComponent?: ComponentType<LoadingErrorProps>
 }
 
 export const ThreadListContainer: FunctionComponent<ThreadListContainerProps> = ({
   children,
+  error,
   loading,
-  LoadingComponent: Loading = DefaultLoading,
+  LoadingComponent = Loading,
+  LoadingErrorComponent = LoadingError,
 }) => {
   const className = useClassFactory('comms', 'thread-list-container')
 
-  return <div className={className()}>{loading ? <Loading /> : children}</div>
+  if (error) {
+    return <LoadingErrorComponent error={error} />
+  }
+
+  if (loading) {
+    return <LoadingComponent />
+  }
+
+  return <div className={className()}>{children}</div>
 }

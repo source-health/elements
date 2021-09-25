@@ -9,16 +9,16 @@ export interface ThreadListItemProps {
   /**
    * The thread that should be rendered in this component
    */
-  readonly thread: Thread
+  thread: Thread
 
   /**
    * Callback to invoke when the thread is clicked/tapped
    */
-  readonly onThreadSelected?: Callback<Thread>
+  onThreadSelected?: Callback<Thread>
   /**
    * Custom Avatar component override
    */
-  readonly AvatarComponent?: ComponentType<AvatarProps>
+  AvatarComponent?: ComponentType<AvatarProps>
 }
 
 export const ThreadListItem: FunctionComponent<ThreadListItemProps> = ({
