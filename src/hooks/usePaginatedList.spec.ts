@@ -51,7 +51,10 @@ describe('usePaginatedList', () => {
     )
 
     const { result, waitForNextUpdate } = renderHook(
-      () => usePaginatedList((client, paging) => client.listThreads(paging)),
+      () =>
+        usePaginatedList({
+          fetch: (client, paging) => client.listThreads(paging),
+        }),
       {
         wrapper,
       },
@@ -78,7 +81,10 @@ describe('usePaginatedList', () => {
     client.listThreads.mockReturnValue(Promise.reject(error))
 
     const { result, waitForNextUpdate } = renderHook(
-      () => usePaginatedList((client, paging) => client.listThreads(paging)),
+      () =>
+        usePaginatedList({
+          fetch: (client, paging) => client.listThreads(paging),
+        }),
       {
         wrapper,
       },
@@ -115,7 +121,10 @@ describe('usePaginatedList', () => {
       )
 
     const { result, waitForNextUpdate } = renderHook(
-      () => usePaginatedList((client, paging) => client.listThreads(paging)),
+      () =>
+        usePaginatedList({
+          fetch: (client, paging) => client.listThreads(paging),
+        }),
       {
         wrapper,
       },
