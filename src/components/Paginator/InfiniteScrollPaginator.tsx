@@ -52,7 +52,7 @@ export const InfiniteScrollPaginator: FunctionComponent<InfiniteScrollPaginatorP
   return (
     <div
       style={{ maxHeight: '400px', overflow: 'auto' }}
-      ref={useMergeRefs(containerRef, scrollableRef)}
+      ref={useMergeRefs<HTMLDivElement>(containerRef, scrollableRef)}
     >
       {isReversed && hasNextPage && (
         <div ref={sentinelRef} style={{ padding: '10px' }}>
