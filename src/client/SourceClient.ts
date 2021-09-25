@@ -1,9 +1,14 @@
 import { Thread } from '.'
 
-export interface ListThreadParams {
-  readonly status?: 'closed' | 'awaiting_care_team' | 'awaiting_member'
-  readonly starting_after?: string
-  readonly ending_before?: string
+export interface PaginationParams {
+  starting_after?: string
+  ending_before?: string
+  limit?: number
+}
+
+export interface ListThreadParams extends PaginationParams {
+  status?: 'closed' | 'awaiting_care_team' | 'awaiting_member'
+  expand?: string | string[]
 }
 
 export type Page<T> = {

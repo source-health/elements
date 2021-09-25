@@ -1,28 +1,52 @@
-import React, { FunctionComponent } from 'react'
+import React, { ComponentType, FunctionComponent } from 'react'
 
 import { Thread } from '../../../client'
-import { useClassFactory, useInfiniteScroll } from '../../../hooks'
+import { useClassFactory } from '../../../hooks'
+import { Loading, LoadingError, LoadingErrorProps, LoadingProps } from '../../Loading'
 
 export interface ThreadListContainerProps {
-  readonly threads: Thread[]
+  /**
+   * Will be true when the list is currently loading
+   */
+  loading: boolean
+
+  /**
+   * Error encountered when loading, if anys
+   */
+  error: Error | null
+
+  /**
+   * List of threads we know about
+   */
+  threads: Thread[]
+
+  /**
+   * Override the loading component with a custom one
+   */
+  LoadingComponent?: ComponentType<LoadingProps>
+
+  /**
+   * Override the component that renders an error message
+   */
+  LoadingErrorComponent?: ComponentType<LoadingErrorProps>
 }
 
-export const ThreadListContainer: FunctionComponent<ThreadListContainerProps> = ({ children }) => {
+export const ThreadListContainer: FunctionComponent<ThreadListContainerProps> = ({
+  children,
+  error,
+  loading,
+  LoadingComponent = Loading,
+  LoadingErrorComponent = LoadingError,
+}) => {
   const className = useClassFactory('comms', 'thread-list-container')
-  const [containerRef, scrollableRef] = useInfiniteScroll({
-    loading: false,
-    hasNextPage: true,
-    rootMargin: '0px 0px 50px 0px',
-    onLoadMore: () => {
-      console.log('load more')
-    },
-  })
 
-  return (
-    <div ref={scrollableRef} className={className()}>
-      {children}
+  if (error) {
+    return <LoadingErrorComponent error={error} />
+  }
 
-      <div ref={containerRef} />
-    </div>
-  )
+  if (loading) {
+    return <LoadingComponent />
+  }
+
+  return <div className={className()}>{children}</div>
 }

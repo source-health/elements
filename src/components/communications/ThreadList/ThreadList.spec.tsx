@@ -27,7 +27,7 @@ describe('ThreadList', () => {
     })
 
     // Make sure the loading indicator shows
-    const loadingElement = await container.findByText('Loading...')
+    const loadingElement = await container.findByTestId('loading-indicator')
 
     // Advance the timer to the promise completion
     jest.advanceTimersByTime(50)
@@ -36,12 +36,26 @@ describe('ThreadList', () => {
     await waitForElementToBeRemoved(loadingElement)
   })
 
+  it('should show an error message when failing', async () => {
+    jest.useFakeTimers()
+    client.listThreads.mockReturnValue(Promise.reject(new Error('Unable to load')))
+
+    const container = render(<ThreadList />, {
+      wrapper,
+    })
+
+    // Make sure the loading indicator shows
+    expect(await container.findByText('Error: Unable to load')).not.toBeNull()
+  })
+
   it('should render all returned threads', async () => {
     const thread1: Thread = {
       id: '123',
       subject: 'Subject: First Thread',
+      assignee: '',
       last_message: {
         sent_at: '',
+        sender: '',
         text: 'Preview: This is a test of thread 123',
       },
     }
@@ -49,8 +63,10 @@ describe('ThreadList', () => {
     const thread2: Thread = {
       id: '456',
       subject: 'Subject: Second Thread',
+      assignee: '',
       last_message: {
         sent_at: '',
+        sender: '',
         text: 'Preview: This is a test of thread 456',
       },
     }

@@ -12,12 +12,12 @@ export interface SourceElementsProps {
    * Typically, this would be a signed JWT identifying which member is currently
    * authenticated with your application.
    */
-  readonly token: string
+  token: string
 
   /**
    * Override the API base URL to pass to the client
    */
-  readonly baseUrl?: string
+  baseUrl?: string
 }
 
 export const SourceElements: FunctionComponent<SourceElementsProps> = ({
