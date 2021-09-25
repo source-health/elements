@@ -58,13 +58,13 @@ export function useScrollPosition({
 
   useEffect(() => {
     const wasOnBottom = isPinnedToBottom.current
-    const prevMeasures = previousMeasures.current
+    // const prevMeasures = previousMeasures.current
     const measures = {
       offsetHeight: listRef?.current?.offsetHeight ?? 0,
       scrollHeight: listRef?.current?.scrollHeight ?? 0,
     }
 
-    const heightDelta = measures.scrollHeight - prevMeasures.scrollHeight
+    // const heightDelta = measures.scrollHeight - prevMeasures.scrollHeight
 
     // See if new messages were added to the list
     if (wasOnBottom) {

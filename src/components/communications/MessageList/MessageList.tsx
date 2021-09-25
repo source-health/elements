@@ -54,17 +54,17 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
     [id],
   )
 
-  const { scrollToBottom } = useScrollPosition({
-    messages: data,
-    listRef,
-  })
-
   const groupingFunction =
     typeof shouldGroupMessages === 'undefined'
       ? defaultIsGrouped
       : shouldGroupMessages
       ? defaultIsGrouped
       : neverIsGrouped
+
+  useScrollPosition({
+    messages: data,
+    listRef,
+  })
 
   return (
     <div>
