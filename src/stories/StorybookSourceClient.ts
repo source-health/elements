@@ -16,7 +16,7 @@ export class StorybookSourceClient extends SourceClient {
         id: `msg_${parsedStartId + i}`,
         text: 'Hello, this is a message',
         thread: params.thread,
-        sender: '',
+        sender: null,
         sent_at: new Date().toISOString(),
       })),
       has_more: !params?.starting_after,
@@ -31,10 +31,10 @@ export class StorybookSourceClient extends SourceClient {
       data: new Array(20).fill(0).map((_, i) => ({
         id: `thr_${parsedStartId + i}`,
         subject: `Thread ${parsedStartId + i} Subject`,
-        assignee: '',
+        assignee: null,
         last_message: {
           text: 'This is the preview of the message',
-          sender: '',
+          sender: null,
           sent_at: new Date().toISOString(),
         },
       })),

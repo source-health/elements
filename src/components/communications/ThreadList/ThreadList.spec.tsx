@@ -52,10 +52,10 @@ describe('ThreadList', () => {
     const thread1: Thread = {
       id: '123',
       subject: 'Subject: First Thread',
-      assignee: '',
+      assignee: null,
       last_message: {
         sent_at: '',
-        sender: '',
+        sender: null,
         text: 'Preview: This is a test of thread 123',
       },
     }
@@ -63,10 +63,10 @@ describe('ThreadList', () => {
     const thread2: Thread = {
       id: '456',
       subject: 'Subject: Second Thread',
-      assignee: '',
+      assignee: null,
       last_message: {
         sent_at: '',
-        sender: '',
+        sender: null,
         text: 'Preview: This is a test of thread 456',
       },
     }

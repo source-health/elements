@@ -16,7 +16,7 @@ export function defaultIsGrouped(
   const leftTimestamp = new Date(left.sent_at)
   const rightTimestamp = new Date(right.sent_at)
 
-  const isMatchingSender = left.sender === right.sender
+  const isMatchingSender = left.sender?.id === right.sender?.id
   const isCloseDate = Math.abs(rightTimestamp.getTime() - leftTimestamp.getTime()) < 5 * 60 * 1000 // 5 minutes
 
   return isMatchingSender && isCloseDate

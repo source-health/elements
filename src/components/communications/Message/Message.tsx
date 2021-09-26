@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react'
 
 import { Message as MessageResource } from '../../../client'
 import { useClassFactory } from '../../../hooks'
+import { Name } from '../../Name'
 
 export interface MessageProps {
   /**
@@ -26,7 +27,7 @@ export const Message: FunctionComponent<MessageProps> = ({
   message,
 }) => {
   const className = useClassFactory('comms', 'message')
-  const isOutgoing = typeof message.sender === 'string' && message.sender.startsWith('mem_')
+  const isOutgoing = message.sender?.id?.startsWith('mem_')
   const previousClassName = groupWithPrevious ? '-group-prev' : ''
   const nextClassName = groupWithNext ? '-group-next' : ''
   const directionClassName = isOutgoing ? '-outgoing' : '-incoming'
@@ -36,7 +37,9 @@ export const Message: FunctionComponent<MessageProps> = ({
 
   return (
     <div className={classNames}>
-      <div className={className('sender')}>Colin Morelli</div>
+      <div className={className('sender')}>
+        <Name person={message.sender} />
+      </div>
       <div className={className('content')}>{message.text}</div>
     </div>
   )

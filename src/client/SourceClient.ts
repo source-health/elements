@@ -31,7 +31,13 @@ export class SourceClient {
    *
    */
   public async listMessages(params: ListMessageParams): Promise<Page<Message>> {
-    return this.request(this.buildUrl('/v1/communication/messages', params), {})
+    return this.request(
+      this.buildUrl('/v1/communication/messages', {
+        expand: ['data.sender'],
+        ...params,
+      }),
+      {},
+    )
   }
 
   /**

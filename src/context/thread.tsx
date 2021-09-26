@@ -1,7 +1,29 @@
 import { createContext, useContext } from 'react'
 
+import { Message } from '../client'
+
 export interface ThreadContextValue {
   id: string
+
+  /**
+   *
+   */
+  messages: Message[]
+
+  /**
+   *
+   */
+  hasMoreMessages: boolean
+
+  /**
+   *
+   */
+  fetchMoreMessages: () => void
+
+  /**
+   *
+   */
+  isLoading: boolean
 }
 
 export const ThreadContext = createContext<ThreadContextValue | null>(null)

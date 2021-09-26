@@ -13,7 +13,7 @@ describe('usePaginatedList', () => {
     assignee: null,
     subject: '',
     last_message: {
-      sender: '',
+      sender: null,
       sent_at: new Date().toISOString(),
       text: '',
     },
@@ -24,7 +24,7 @@ describe('usePaginatedList', () => {
     assignee: null,
     subject: '',
     last_message: {
-      sender: '',
+      sender: null,
       sent_at: new Date().toISOString(),
       text: '',
     },
@@ -35,7 +35,7 @@ describe('usePaginatedList', () => {
     assignee: null,
     subject: '',
     last_message: {
-      sender: '',
+      sender: null,
       sent_at: new Date().toISOString(),
       text: '',
     },

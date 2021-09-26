@@ -1,7 +1,6 @@
 import React, { ComponentType, FunctionComponent, useRef } from 'react'
 
 import { useThreadContext } from '../../../context/thread'
-import { usePaginatedList } from '../../../hooks'
 import { LoadingErrorProps, LoadingProps } from '../../Loading'
 import { InfiniteScrollPaginator, InfiniteScrollPaginatorProps } from '../../Paginator'
 import { Message } from '../Message'
@@ -20,17 +19,17 @@ export interface MessageListProps {
   shouldGroupMessages?: boolean | IsGroupedCallback
 
   /**
-   *
+   * Custom component to use for the paginator (defaults to infinite scroll)
    */
   PaginatorComponent?: ComponentType<InfiniteScrollPaginatorProps>
 
   /**
-   *
+   * Custom component to use for the loading indicator
    */
   LoadingComponent?: ComponentType<LoadingProps>
 
   /**
-   *
+   * Custom component to use for the error message
    */
   LoadingErrorComponent?: ComponentType<LoadingErrorProps>
 }
@@ -41,18 +40,7 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
   PaginatorComponent: Paginator = InfiniteScrollPaginator,
 }) => {
   const listRef = useRef<HTMLDivElement>(null)
-  const { id } = useThreadContext()
-  const { data, isLoading, hasNextPage, fetchNextPage } = usePaginatedList(
-    {
-      fetch: (client, paging) =>
-        client.listMessages({
-          thread: id,
-          ...paging,
-        }),
-      isReversed: true,
-    },
-    [id],
-  )
+  const { messages, isLoading, hasMoreMessages, fetchMoreMessages } = useThreadContext()
 
   const groupingFunction =
     typeof shouldGroupMessages === 'undefined'
@@ -62,7 +50,7 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
       : neverIsGrouped
 
   useScrollPosition({
-    messages: data,
+    messages,
     listRef,
   })
 
@@ -71,17 +59,17 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
       <Paginator
         isLoading={isLoading}
         isReversed={true}
-        hasNextPage={hasNextPage}
+        hasNextPage={hasMoreMessages}
         scrollableRef={listRef}
-        fetchNextPage={fetchNextPage}
+        fetchNextPage={fetchMoreMessages}
         LoadingComponent={LoadingComponent}
       >
-        {data.map((message, i) => (
+        {messages.map((message, i) => (
           <Message
             key={message.id}
             message={message}
-            groupWithPrevious={groupingFunction(data[i - 1], message)}
-            groupWithNext={groupingFunction(message, data[i + 1])}
+            groupWithPrevious={groupingFunction(messages[i - 1], message)}
+            groupWithNext={groupingFunction(message, messages[i + 1])}
           />
         ))}
       </Paginator>
