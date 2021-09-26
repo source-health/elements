@@ -46,7 +46,7 @@ export const InfiniteScrollPaginator: FunctionComponent<InfiniteScrollPaginatorP
     hasNextPage,
     loading: isLoading,
     onLoadMore: fetchNextPage,
-    rootMargin: isReversed ? '100px 0px 0px 0px' : '0px 0px 100px 0px',
+    rootMargin: isReversed ? '50px 0px 0px 0px' : '0px 0px 50px 0px',
   })
 
   return (
