@@ -25,4 +25,18 @@ describe('Message', () => {
     expect(await container.findByText('Colin Morelli')).not.toBeNull()
     expect(await container.findByText(message.text)).not.toBeNull()
   })
+
+  it('should apply grouping', async () => {
+    const { container } = render(<Message message={message} groupWithPrevious groupWithNext />)
+    const element = container.firstElementChild
+
+    expect(element).toHaveClass('-group-prev')
+    expect(element).toHaveClass('-group-next')
+
+    const { container: container2 } = render(<Message message={message} />)
+    const element2 = container2.firstElementChild
+
+    expect(element2).not.toHaveClass('-group-prev')
+    expect(element2).not.toHaveClass('-group-next')
+  })
 })
