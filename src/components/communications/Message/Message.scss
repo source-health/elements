@@ -23,8 +23,8 @@
 
   &--content {
     background: #f6f6f6;
-    padding: 0.75rem;
-    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 1.5rem;
     display: inline-flex;
   }
 
@@ -46,7 +46,7 @@
   }
 
   &.-outgoing &--content {
-    background-color: green;
+    background-color: var(--source-accent-color);
     color: white;
   }
 }
