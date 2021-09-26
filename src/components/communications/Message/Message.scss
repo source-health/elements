@@ -2,15 +2,21 @@
   font-size: 0.875rem;
   margin: 0.25rem 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
 
-  &:not(.-group-prev) {
+  &--top, &--single {
     margin-top: 0.75rem;
   }
 
-  &:not(.-group-next) {
-    margin-bottom: 0.75rem;
+  &--bottom, &--single {
+    margin-bottom: 1.5rem;
+  }
+
+  &--container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   &--sender {
@@ -18,7 +24,7 @@
     opacity: 0.5;
     font-size: 0.75rem;
     padding: 0 0.75rem;
-    margin: 0.125rem 0;
+    margin: 0.125rem 0 -1rem 0;
   }
 
   &--content {
@@ -28,24 +34,41 @@
     display: inline-flex;
   }
 
-  &.-group-prev &--sender {
+  &--image {
+    margin: 0 0.5rem;
+  }
+
+  &--top &--sender, &--middle &--sender {
     display: none;
   }
 
-  &.-group-prev &--content {
-    border-top-left-radius: 0.125rem;
-    border-top-left-radius: 0.125rem;
+  &--top &--image, &--middle &--image {
+    visibility: hidden;
   }
 
-  &.-group-next &--content {
+  &--top &--content {
     border-bottom-left-radius: 0.125rem;
   }
 
-  &.-outgoing {
+  &--bottom &--content {
+    border-top-left-radius: 0.125rem;
+  }
+
+  &--middle &--content {
+    border-top-left-radius: 0.125rem;
+    border-bottom-left-radius: 0.125rem;
+  }
+
+  &--outgoing {
+    flex-direction: row-reverse;
     align-items: flex-end;
   }
 
-  &.-outgoing &--content {
+  &--outgoing &--container {
+    align-items: flex-end;
+  }
+
+  &--outgoing &--content {
     background-color: var(--source-accent-color);
     color: white;
   }

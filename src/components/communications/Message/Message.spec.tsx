@@ -19,6 +19,19 @@ describe('Message', () => {
     sent_at: new Date().toISOString(),
   }
 
+  const outgoingMessage: MessageResource = {
+    id: 'msg_123',
+    text: 'This is a message',
+    thread: 'thr_asdf',
+    sender: {
+      object: 'member',
+      id: 'mem_123',
+      first_name: 'Colin',
+      last_name: 'Morelli',
+    },
+    sent_at: new Date().toISOString(),
+  }
+
   it('should render a message', async () => {
     const container = render(<Message message={message} />)
 
@@ -26,17 +39,27 @@ describe('Message', () => {
     expect(await container.findByText(message.text)).not.toBeNull()
   })
 
-  it('should apply grouping', async () => {
+  it('should apply grouping class names', async () => {
     const { container } = render(<Message message={message} groupWithPrevious groupWithNext />)
     const element = container.firstElementChild
 
-    expect(element).toHaveClass('-group-prev')
-    expect(element).toHaveClass('-group-next')
+    expect(element).toHaveClass('source-comms__message--middle')
 
     const { container: container2 } = render(<Message message={message} />)
     const element2 = container2.firstElementChild
 
-    expect(element2).not.toHaveClass('-group-prev')
-    expect(element2).not.toHaveClass('-group-next')
+    expect(element2).toHaveClass('source-comms__message--single')
+  })
+
+  it('should apply direction class name', async () => {
+    const { container } = render(<Message message={message} groupWithPrevious groupWithNext />)
+    const element = container.firstElementChild
+
+    expect(element).toHaveClass('source-comms__message--incoming')
+
+    const { container: container2 } = render(<Message message={outgoingMessage} />)
+    const element2 = container2.firstElementChild
+
+    expect(element2).toHaveClass('source-comms__message--outgoing')
   })
 })

@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react'
 
 import { Message as MessageResource } from '../../../client'
 import { useClassFactory } from '../../../hooks'
+import { Avatar } from '../../Avatar'
 import { Name } from '../../Name'
 
 export interface MessageProps {
@@ -27,20 +28,29 @@ export const Message: FunctionComponent<MessageProps> = ({
   message,
 }) => {
   const className = useClassFactory('comms', 'message')
+  const groupClassName =
+    groupWithNext && groupWithPrevious
+      ? className('middle')
+      : groupWithNext
+      ? className('top')
+      : groupWithPrevious
+      ? className('bottom')
+      : className('single')
   const isOutgoing = message.sender?.id?.startsWith('mem_')
-  const previousClassName = groupWithPrevious ? '-group-prev' : ''
-  const nextClassName = groupWithNext ? '-group-next' : ''
-  const directionClassName = isOutgoing ? '-outgoing' : '-incoming'
-  const classNames = [className(), previousClassName, nextClassName, directionClassName]
-    .filter((name) => !!name)
-    .join(' ')
+  const directionClassName = className(isOutgoing ? 'outgoing' : 'incoming')
+  const classNames = [className(), groupClassName, directionClassName].join(' ')
 
   return (
     <div className={classNames}>
-      <div className={className('sender')}>
-        <Name person={message.sender} />
+      <div className={className('image')}>
+        <Avatar size={32} />
       </div>
-      <div className={className('content')}>{message.text}</div>
+      <div className={className('container')}>
+        <div className={className('content')}>{message.text}</div>
+        <div className={className('sender')}>
+          <Name person={message.sender} />
+        </div>
+      </div>
     </div>
   )
 }

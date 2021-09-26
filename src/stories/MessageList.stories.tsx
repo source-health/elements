@@ -4,7 +4,7 @@ import React from 'react'
 import { MessageList, MessageListProps, SourceElements, Thread } from '..'
 
 export default {
-  title: 'Components/MessageList',
+  title: 'Components/Message List',
   component: MessageList,
 } as Meta
 
