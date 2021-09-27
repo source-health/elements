@@ -24,6 +24,7 @@ type Mock<T> = T extends (...args: infer P) => infer R
  */
 export function createElementsWrapper(): [FunctionComponent<unknown>, Mock<SourceClient>] {
   const client: Mock<SourceClient> = {
+    listMessages: jest.fn(),
     listThreads: jest.fn(),
   }
 

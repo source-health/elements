@@ -1,10 +1,12 @@
-import React, { ComponentType, FunctionComponent } from 'react'
+import React, { ComponentType, FunctionComponent, RefObject } from 'react'
 
-import { useInfiniteScroll } from '../../hooks'
+import { useInfiniteScroll, useMergeRefs } from '../../hooks'
 import { Callback } from '../../types'
 import { Loading, LoadingProps } from '../Loading'
 
 export interface InfiniteScrollPaginatorProps {
+  scrollableRef?: RefObject<HTMLDivElement>
+
   /**
    * Boolean indicating whether or not there is a next page
    */
@@ -21,6 +23,11 @@ export interface InfiniteScrollPaginatorProps {
   isLoading: boolean
 
   /**
+   * Boolean indicating if this infinite scroller should be reversed (trigger more when scrolling to top)
+   */
+  isReversed?: boolean
+
+  /**
    * Override the loading component
    */
   LoadingComponent?: ComponentType<LoadingProps>
@@ -30,20 +37,30 @@ export const InfiniteScrollPaginator: FunctionComponent<InfiniteScrollPaginatorP
   children,
   hasNextPage,
   fetchNextPage,
+  scrollableRef,
   isLoading,
+  isReversed = false,
   LoadingComponent = Loading,
 }) => {
-  const [sentinelRef] = useInfiniteScroll({
+  const [sentinelRef, containerRef] = useInfiniteScroll({
     hasNextPage,
     loading: isLoading,
     onLoadMore: fetchNextPage,
-    rootMargin: '0px 0px 100px 0px',
+    rootMargin: isReversed ? '50px 0px 0px 0px' : '0px 0px 50px 0px',
   })
 
   return (
-    <div>
+    <div
+      style={{ maxHeight: '400px', overflow: 'auto' }}
+      ref={useMergeRefs<HTMLDivElement>(containerRef, scrollableRef)}
+    >
+      {isReversed && hasNextPage && (
+        <div ref={sentinelRef} style={{ padding: '10px' }}>
+          {isLoading && <LoadingComponent />}
+        </div>
+      )}
       {children}
-      {hasNextPage && (
+      {!isReversed && hasNextPage && (
         <div ref={sentinelRef} style={{ padding: '10px' }}>
           {isLoading && <LoadingComponent />}
         </div>

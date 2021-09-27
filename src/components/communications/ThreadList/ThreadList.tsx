@@ -74,12 +74,14 @@ export const ThreadList: FunctionComponent<ThreadListProps> = ({
   ItemComponent: Item = ThreadListItem,
 }) => {
   const { data, error, isLoading, isRefreshing, hasNextPage, fetchNextPage } = usePaginatedList(
-    (client, paging) =>
-      client.listThreads({
-        ...filters,
-        ...paging,
-        expand: ['assignee', 'last_message.sender'],
-      }),
+    {
+      fetch: (client, paging) =>
+        client.listThreads({
+          ...filters,
+          ...paging,
+          expand: ['assignee', 'last_message.sender'],
+        }),
+    },
     [filters],
   )
 

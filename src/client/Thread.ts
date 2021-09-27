@@ -1,10 +1,12 @@
+import { Person } from './Person'
+
 export interface Thread {
   id: string
   subject: string
-  assignee: unknown
+  assignee: Person | null
   last_message: {
     text: string
-    sender: unknown
+    sender: Person | null
     sent_at: string
   }
 }

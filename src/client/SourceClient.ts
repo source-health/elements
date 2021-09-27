@@ -1,4 +1,5 @@
-import { Thread } from '.'
+import { Message } from './Message'
+import { Thread } from './Thread'
 
 export interface PaginationParams {
   starting_after?: string
@@ -11,6 +12,10 @@ export interface ListThreadParams extends PaginationParams {
   expand?: string | string[]
 }
 
+export interface ListMessageParams extends PaginationParams {
+  thread: string
+}
+
 export type Page<T> = {
   data: T[]
   has_more: boolean
@@ -20,6 +25,19 @@ export class SourceClient {
   constructor(protected readonly baseUrl: string, protected readonly token: string) {
     this.baseUrl = baseUrl
     this.token = token
+  }
+
+  /**
+   *
+   */
+  public async listMessages(params: ListMessageParams): Promise<Page<Message>> {
+    return this.request(
+      this.buildUrl('/v1/communication/messages', {
+        expand: ['data.sender'],
+        ...params,
+      }),
+      {},
+    )
   }
 
   /**
