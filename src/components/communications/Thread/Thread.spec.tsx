@@ -37,6 +37,7 @@ describe('Thread', () => {
     })
 
     expect(client.listMessages).toHaveBeenCalledWith({
+      limit: 15,
       thread: 'threadTest',
     })
 

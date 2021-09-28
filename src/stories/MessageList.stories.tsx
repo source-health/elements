@@ -2,6 +2,7 @@ import { Meta, Story } from '@storybook/react'
 import React from 'react'
 
 import { MessageList, MessageListProps, SourceElements, Thread } from '..'
+import { MessageInput } from '../components/communications/MessageInput'
 
 export default {
   title: 'Components/Message List',
@@ -15,6 +16,7 @@ export const Simple: Story<MessageListProps> = (args) => (
   >
     <Thread id="thrd_PJAcMMhZwhzz6z12A4c2">
       <MessageList {...args} />
+      <MessageInput />
     </Thread>
   </SourceElements>
 )

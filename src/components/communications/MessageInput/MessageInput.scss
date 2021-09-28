@@ -1,0 +1,39 @@
+.source-comms__message-input {
+  border: 1px solid #eee;
+  border-radius: 6px;
+  display: flex;
+  align-items: flex-start;
+
+  &--focused {
+    border-color: black;
+    box-shadow: 0 0 0 1px black;
+  }
+
+  &--textarea {
+    border: none;
+    resize: none;
+    outline: none;
+    appearance: none;
+    background: transparent;
+    display: block;
+    width: 100%;
+    font-family: inherit;
+    padding: 0.75rem;
+    box-sizing: border-box;
+  }
+
+  &--send-button {
+    color: gray;
+    cursor: default;
+  }
+
+  &--has-text &--send-button {
+    color: black;
+    cursor: pointer;
+  }
+
+  &--action-buttons {
+    padding: 0.6rem;
+    display: inline-flex;
+  }
+}

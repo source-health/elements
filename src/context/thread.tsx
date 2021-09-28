@@ -1,9 +1,14 @@
 import { createContext, useContext } from 'react'
 
-import { Message } from '../client'
+import { CreateMessageParams, Message } from '../client'
 
 export interface ThreadContextValue {
   id: string
+
+  /**
+   *
+   */
+  isLoading: boolean
 
   /**
    *
@@ -23,7 +28,7 @@ export interface ThreadContextValue {
   /**
    *
    */
-  isLoading: boolean
+  sendMessage: (params: Omit<CreateMessageParams, 'thread'>) => Promise<void>
 }
 
 export const ThreadContext = createContext<ThreadContextValue | null>(null)

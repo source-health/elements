@@ -16,6 +16,11 @@ export interface ListMessageParams extends PaginationParams {
   thread: string
 }
 
+export interface CreateMessageParams {
+  thread: string
+  text: string
+}
+
 export type Page<T> = {
   data: T[]
   has_more: boolean
@@ -25,6 +30,21 @@ export class SourceClient {
   constructor(protected readonly baseUrl: string, protected readonly token: string) {
     this.baseUrl = baseUrl
     this.token = token
+  }
+
+  public async createMessage(params: CreateMessageParams): Promise<Message> {
+    return this.request(
+      this.buildUrl('/v1/communication/messages', {
+        expand: ['sender'],
+      }),
+      {
+        method: 'POST',
+        body: JSON.stringify(params),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    )
   }
 
   /**
@@ -55,12 +75,12 @@ export class SourceClient {
 
   private async request<T>(url: string, config: RequestInit): Promise<T> {
     const response = await fetch(url, {
+      ...config,
       headers: {
         ...config?.headers,
         Authorization: `Bearer ${this.token}`,
         'Catalyst-Live-Mode': 'false',
       },
-      ...config,
     })
 
     return await response.json()
