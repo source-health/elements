@@ -22,6 +22,7 @@ export const MessageInputSimple: FunctionComponent<unknown> = () => {
     <div className={classNames}>
       <AutosizeTextarea
         className={className('textarea')}
+        placeholder="Enter message..."
         ref={ref}
         onChange={handleChange}
         value={text}
