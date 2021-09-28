@@ -11,7 +11,8 @@ export const Avatar: FunctionComponent<AvatarProps> = ({ size = 36 }) => {
         width: `${size}px`,
         height: `${size}px`,
         borderRadius: `${size}px`,
-        backgroundColor: 'green',
+        backgroundImage: 'url(https://randomuser.me/api/portraits/women/47.jpg)',
+        backgroundSize: 'cover',
       }}
     />
   )

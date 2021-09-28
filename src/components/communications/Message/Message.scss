@@ -6,11 +6,11 @@
   align-items: flex-start;
 
   &--top, &--single {
-    margin-top: 0.75rem;
+    margin-top: 1rem;
   }
 
   &--bottom, &--single {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
   }
 
   &--container {
@@ -19,12 +19,17 @@
     align-items: flex-start;
   }
 
-  &--sender {
-    font-weight: 600;
-    opacity: 0.5;
+  &--meta {
+    display: inline-flex;
+    color: #929CA6;
     font-size: 0.75rem;
     padding: 0 0.75rem;
     margin: 0.125rem 0 -1rem 0;
+  }
+
+  &--sender {
+    font-weight: 600;
+    margin-right: 0.25rem;
   }
 
   &--content {
@@ -38,7 +43,7 @@
     margin: 0 0.5rem;
   }
 
-  &--top &--sender, &--middle &--sender {
+  &--top &--meta, &--middle &--meta {
     display: none;
   }
 
@@ -64,6 +69,10 @@
     align-items: flex-end;
   }
 
+  &--outgoing &--image {
+    display: none;
+  }
+
   &--outgoing &--container {
     align-items: flex-end;
   }
@@ -71,5 +80,9 @@
   &--outgoing &--content {
     background-color: var(--source-accent-color);
     color: white;
+  }
+
+  &--outgoing &--sender {
+    display: none;
   }
 }
