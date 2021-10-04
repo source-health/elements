@@ -1,14 +1,13 @@
+import { ApiKey, Source } from '@source-health/client'
 import { renderHook } from '@testing-library/react-hooks'
 import React from 'react'
-
-import { SourceClient } from '../client'
 
 import { SourceContext, SourceContextValue, useSourceClient, useSourceContext } from './elements'
 
 describe('Elements Context', () => {
   it('should return the context value when mounted', () => {
     const value: SourceContextValue = {
-      client: new SourceClient('', ''),
+      client: new Source(new ApiKey('', '')),
     }
 
     const { result } = renderHook(() => useSourceContext(), {
@@ -20,7 +19,7 @@ describe('Elements Context', () => {
 
   it('should return the client when mounted', () => {
     const value: SourceContextValue = {
-      client: new SourceClient('', ''),
+      client: new Source(new ApiKey('', '')),
     }
 
     const { result } = renderHook(() => useSourceClient(), {

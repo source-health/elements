@@ -12,7 +12,9 @@
     "check:typescript": "tsc --noEmit",
     "test": "jest"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@source-health/client": "^0.4.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@storybook/addon-actions": "^6.3.8",

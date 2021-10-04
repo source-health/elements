@@ -1,13 +1,12 @@
+import { Member, User } from '@source-health/client'
 import React, { FunctionComponent } from 'react'
 
-import { Person } from '../../client/Person'
-
 export interface NameProps {
-  person: Person | null
+  person: User | Member | string | null
 }
 
 export const Name: FunctionComponent<NameProps> = ({ person }) => {
-  if (!person) {
+  if (!person || typeof person === 'string') {
     return <span>Unknown</span>
   }
 

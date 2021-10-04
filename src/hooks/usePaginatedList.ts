@@ -1,11 +1,23 @@
+import { Source } from '@source-health/client'
 import { useCallback, useEffect, useState } from 'react'
 
-import { Page, PaginationParams, SourceClient } from '../client'
 import { useSourceClient } from '../context/elements'
 import { Callback } from '../types'
 
 interface Identifiable {
   id: string
+}
+
+interface PaginationParams {
+  starting_after?: string
+  ending_before?: string
+  limit?: number
+}
+
+interface Page<T> {
+  object: 'list'
+  data: T[]
+  has_more: boolean
 }
 
 interface PaginatedState<T extends Identifiable> {
@@ -26,7 +38,7 @@ interface PaginatedList<T extends Identifiable> extends PaginatedState<T> {
 }
 
 export interface UsePaginatedListArgs<T extends Identifiable> {
-  fetch: (client: SourceClient, params: PaginationParams) => Promise<Page<T>>
+  fetch: (client: Source, params: PaginationParams) => Promise<Page<T>>
   isReversed?: boolean
 }
 

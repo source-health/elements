@@ -6,7 +6,14 @@ import { createDelayedPromise, createElementsWrapper } from '../../test/utils'
 import { usePaginatedList } from './usePaginatedList'
 
 describe('usePaginatedList', () => {
-  const [wrapper, client] = createElementsWrapper()
+  const [wrapper, client] = createElementsWrapper({
+    communications: {
+      threads: {
+        list: jest.fn(),
+      },
+    },
+  })
+
   const error = new Error('Failed to load')
   const thread = {
     id: '123',
@@ -43,7 +50,7 @@ describe('usePaginatedList', () => {
 
   it('should load the initial list', async () => {
     jest.useFakeTimers()
-    client.listThreads.mockReturnValue(
+    client.communications.threads.list.mockReturnValue(
       createDelayedPromise(100, {
         data: [thread],
         has_more: true,
@@ -53,7 +60,7 @@ describe('usePaginatedList', () => {
     const { result, waitForNextUpdate } = renderHook(
       () =>
         usePaginatedList({
-          fetch: (client, paging) => client.listThreads(paging),
+          fetch: (client, paging) => client.communications.threads.list(paging),
         }),
       {
         wrapper,
@@ -78,12 +85,12 @@ describe('usePaginatedList', () => {
 
   it('should handle failures', async () => {
     jest.useFakeTimers()
-    client.listThreads.mockReturnValue(Promise.reject(error))
+    client.communications.threads.list.mockReturnValue(Promise.reject(error))
 
     const { result, waitForNextUpdate } = renderHook(
       () =>
         usePaginatedList({
-          fetch: (client, paging) => client.listThreads(paging),
+          fetch: (client, paging) => client.communications.threads.list(paging),
         }),
       {
         wrapper,
@@ -100,7 +107,7 @@ describe('usePaginatedList', () => {
   })
 
   it('should load subsequent pages', async () => {
-    client.listThreads
+    client.communications.threads.list
       .mockReturnValueOnce(
         Promise.resolve({
           data: [thread],
@@ -123,7 +130,7 @@ describe('usePaginatedList', () => {
     const { result, waitForNextUpdate } = renderHook(
       () =>
         usePaginatedList({
-          fetch: (client, paging) => client.listThreads(paging),
+          fetch: (client, paging) => client.communications.threads.list(paging),
         }),
       {
         wrapper,

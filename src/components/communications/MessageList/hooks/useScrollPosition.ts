@@ -1,6 +1,6 @@
+import { Message } from '@source-health/client'
 import { RefObject, useCallback, useEffect, useLayoutEffect, useRef } from 'react'
 
-import { Message } from '../../../../client'
 import { Callback } from '../../../../types'
 
 export interface UseScrollPositionArgs {

@@ -1,22 +1,29 @@
+import { Thread } from '@source-health/client'
 import { render, waitForElementToBeRemoved } from '@testing-library/react'
 import React from 'react'
 
 import { createDelayedPromise, createElementsWrapper } from '../../../../test/utils'
-import { Thread } from '../../../client'
 
 import { ThreadList } from './ThreadList'
 
 describe('ThreadList', () => {
-  const [wrapper, client] = createElementsWrapper()
+  const [wrapper, client] = createElementsWrapper({
+    communications: {
+      threads: {
+        list: jest.fn(),
+      },
+    },
+  })
 
   beforeEach(() => {
-    client.listThreads.mockClear()
+    client.communications.threads.list.mockClear()
   })
 
   it('should show loader while loading', async () => {
     jest.useFakeTimers()
-    client.listThreads.mockReturnValue(
+    client.communications.threads.list.mockReturnValue(
       createDelayedPromise(10, {
+        object: 'list',
         data: [],
         has_more: false,
       }),
@@ -38,7 +45,7 @@ describe('ThreadList', () => {
 
   it('should show an error message when failing', async () => {
     jest.useFakeTimers()
-    client.listThreads.mockReturnValue(Promise.reject(new Error('Unable to load')))
+    client.communications.threads.list.mockReturnValue(Promise.reject(new Error('Unable to load')))
 
     const container = render(<ThreadList />, {
       wrapper,
@@ -50,28 +57,40 @@ describe('ThreadList', () => {
 
   it('should render all returned threads', async () => {
     const thread1: Thread = {
+      object: 'thread',
       id: '123',
       subject: 'Subject: First Thread',
       assignee: null,
+      member: '',
+      status: 'closed',
       last_message: {
         sent_at: '',
-        sender: null,
+        sender: '',
         text: 'Preview: This is a test of thread 123',
       },
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      closed_at: null,
     }
 
     const thread2: Thread = {
+      object: 'thread',
       id: '456',
       subject: 'Subject: Second Thread',
       assignee: null,
+      member: '',
+      status: 'closed',
       last_message: {
         sent_at: '',
-        sender: null,
+        sender: '',
         text: 'Preview: This is a test of thread 456',
       },
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      closed_at: null,
     }
 
-    client.listThreads.mockReturnValue(
+    client.communications.threads.list.mockReturnValue(
       Promise.resolve({
         data: [thread1, thread2],
         has_more: false,

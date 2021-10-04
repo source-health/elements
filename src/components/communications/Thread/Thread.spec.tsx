@@ -7,7 +7,14 @@ import { useThreadContext } from '../../../context/thread'
 import { Thread } from './Thread'
 
 describe('Thread', () => {
-  const [wrapper, client] = createElementsWrapper()
+  const [wrapper, client] = createElementsWrapper({
+    communications: {
+      messages: {
+        list: jest.fn(),
+      },
+    },
+  })
+
   const ThreadWrapper: FunctionComponent<{ id: string }> = ({ id, children }) =>
     wrapper({
       children: <Thread id={id}>{children}</Thread>,
@@ -15,15 +22,18 @@ describe('Thread', () => {
 
   it('should load messages', async () => {
     const message = {
+      object: 'message' as const,
       id: 'msg1',
+      type: 'text' as const,
       thread: 'threadTest',
       text: 'Hello!',
-      sender: null,
+      sender: '',
       sent_at: new Date().toISOString(),
     }
 
-    client.listMessages.mockReturnValue(
+    client.communications.messages.list.mockReturnValue(
       Promise.resolve({
+        object: 'list',
         data: [message],
         has_more: false,
       }),
@@ -36,10 +46,15 @@ describe('Thread', () => {
       },
     })
 
-    expect(client.listMessages).toHaveBeenCalledWith({
-      limit: 15,
-      thread: 'threadTest',
-    })
+    expect(client.communications.messages.list).toHaveBeenCalledWith(
+      {
+        limit: 15,
+        thread: 'threadTest',
+      },
+      {
+        expand: ['data.sender'],
+      },
+    )
 
     expect(result.current.id).toEqual('threadTest')
     expect(result.current.isLoading).toBeTruthy()

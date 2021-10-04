@@ -1,6 +1,5 @@
+import { Source } from '@source-health/client'
 import { createContext, useContext } from 'react'
-
-import { SourceClient } from '../client/SourceClient'
 
 export interface SourceContextValue {
   /**
@@ -11,7 +10,7 @@ export interface SourceContextValue {
    * Applications should not access this value directly. It will be provided to API calls
    * transparently by the application
    */
-  readonly client: SourceClient
+  readonly client: Source
 }
 
 export const SourceContext = createContext<SourceContextValue | null>(null)
@@ -27,7 +26,7 @@ export function useSourceContext(): SourceContextValue {
   return context
 }
 
-export function useSourceClient(): SourceClient {
+export function useSourceClient(): Source {
   const { client } = useSourceContext()
   return client
 }

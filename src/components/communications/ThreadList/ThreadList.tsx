@@ -1,6 +1,6 @@
+import { Thread, ThreadStatus } from '@source-health/client'
 import React, { ComponentType, FunctionComponent } from 'react'
 
-import { Thread } from '../../../client'
 import { usePaginatedList } from '../../../hooks'
 import { Callback } from '../../../types'
 import { AvatarProps } from '../../Avatar'
@@ -18,7 +18,7 @@ interface ThreadListFilters {
   /**
    * Only show threads in the given status
    */
-  status?: 'closed' | 'awaiting_care_team' | 'awaiting_member'
+  status?: ThreadStatus[]
 }
 
 export interface ThreadListProps {
@@ -76,11 +76,15 @@ export const ThreadList: FunctionComponent<ThreadListProps> = ({
   const { data, error, isLoading, isRefreshing, hasNextPage, fetchNextPage } = usePaginatedList(
     {
       fetch: (client, paging) =>
-        client.listThreads({
-          ...filters,
-          ...paging,
-          expand: ['assignee', 'last_message.sender'],
-        }),
+        client.communications.threads.list(
+          {
+            ...filters,
+            ...paging,
+          },
+          {
+            expand: ['assignee', 'last_message.sender'],
+          },
+        ),
     },
     [filters],
   )

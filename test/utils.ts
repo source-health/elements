@@ -1,13 +1,13 @@
+import { Source } from '@source-health/client'
 import { createElement, FunctionComponent } from 'react'
 
-import { SourceClient } from '../src/client'
 import { SourceContext } from '../src/context/elements'
 
-type Mock<T> = T extends (...args: infer P) => infer R
-  ? jest.Mock<R, P>
-  : {
-      [K in keyof T]: Mock<T[K]>
-    }
+type MockableKeys<T> = {
+  [K in keyof T]: T[K] extends (...args: infer P) => infer R ? jest.Mock<R, P> : MockableTree<T[K]>
+}
+
+type MockableTree<T> = Partial<MockableKeys<T>>
 
 /**
  * Creates a wrapper component and a mock SourceClient instance to test individual Elements
@@ -22,13 +22,9 @@ type Mock<T> = T extends (...args: infer P) => infer R
  *
  * @returns the wrapper element to render and the mock
  */
-export function createElementsWrapper(): [FunctionComponent<unknown>, Mock<SourceClient>] {
-  const client: Mock<SourceClient> = {
-    createMessage: jest.fn(),
-    listMessages: jest.fn(),
-    listThreads: jest.fn(),
-  }
-
+export function createElementsWrapper<T extends MockableTree<Source>>(
+  client: T,
+): [FunctionComponent<unknown>, T] {
   const wrapper: FunctionComponent<unknown> = ({ children }) =>
     createElement(SourceContext.Provider, {
       value: {

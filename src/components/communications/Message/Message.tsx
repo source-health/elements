@@ -1,8 +1,9 @@
+import { Message as MessageResource } from '@source-health/client'
 import React, { FunctionComponent } from 'react'
 
-import { Message as MessageResource } from '../../../client'
 import { useClassFactory } from '../../../hooks'
 import { Formatter } from '../../../types'
+import { expand } from '../../../utils'
 import { Name } from '../../Name'
 
 export interface MessageProps {
@@ -46,7 +47,7 @@ export const Message: FunctionComponent<MessageProps> = ({
       : groupWithPrevious
       ? className('bottom')
       : className('single')
-  const isOutgoing = message.sender?.id?.startsWith('mem_')
+  const isOutgoing = expand(message.sender).id.startsWith('mem_')
   const directionClassName = className(isOutgoing ? 'outgoing' : 'incoming')
   const classNames = [className(), groupClassName, directionClassName].join(' ')
   const date = new Date(message.sent_at)

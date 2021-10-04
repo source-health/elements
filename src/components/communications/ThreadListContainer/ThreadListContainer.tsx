@@ -1,6 +1,6 @@
+import { Thread } from '@source-health/client'
 import React, { ComponentType, FunctionComponent } from 'react'
 
-import { Thread } from '../../../client'
 import { useClassFactory } from '../../../hooks'
 import { Loading, LoadingError, LoadingErrorProps, LoadingProps } from '../../Loading'
 

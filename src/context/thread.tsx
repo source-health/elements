@@ -1,6 +1,5 @@
+import { MessageCreateParams, Message } from '@source-health/client'
 import { createContext, useContext } from 'react'
-
-import { CreateMessageParams, Message } from '../client'
 
 export interface ThreadContextValue {
   id: string
@@ -28,7 +27,7 @@ export interface ThreadContextValue {
   /**
    *
    */
-  sendMessage: (params: Omit<CreateMessageParams, 'thread'>) => Promise<void>
+  sendMessage: (params: Omit<MessageCreateParams, 'thread'>) => Promise<void>
 }
 
 export const ThreadContext = createContext<ThreadContextValue | null>(null)

@@ -1,34 +1,37 @@
+import { Member, Message as MessageResource, User } from '@source-health/client'
 import { render } from '@testing-library/react'
 import React from 'react'
-
-import { Message as MessageResource } from '../../../client'
 
 import { Message } from './Message'
 
 describe('Message', () => {
   const message: MessageResource = {
+    object: 'message',
     id: 'msg_123',
     text: 'This is a message',
     thread: 'thr_asdf',
+    type: 'text',
     sender: {
       object: 'user',
       id: 'usr_123',
       first_name: 'Colin',
       last_name: 'Morelli',
-    },
+    } as User,
     sent_at: new Date().toISOString(),
   }
 
   const outgoingMessage: MessageResource = {
+    object: 'message',
     id: 'msg_123',
     text: 'This is a message',
     thread: 'thr_asdf',
+    type: 'text',
     sender: {
       object: 'member',
       id: 'mem_123',
       first_name: 'Colin',
       last_name: 'Morelli',
-    },
+    } as Member,
     sent_at: new Date().toISOString(),
   }
 

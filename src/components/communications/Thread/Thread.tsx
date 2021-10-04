@@ -1,6 +1,6 @@
+import { MessageCreateParams, Message } from '@source-health/client'
 import React, { FunctionComponent, useCallback, useEffect, useMemo, useReducer } from 'react'
 
-import { CreateMessageParams, Message } from '../../../client'
 import { useSourceClient } from '../../../context/elements'
 import { ThreadContext } from '../../../context/thread'
 
@@ -19,16 +19,28 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children }) => {
   const { messages, isLoading, hasMoreMessages } = state
 
   const sendMessage = useCallback(
-    async (params: Omit<CreateMessageParams, 'thread'>) => {
+    async (params: Omit<MessageCreateParams, 'thread'>) => {
       const message: Message = {
+        object: 'message',
         id: `msg_${Math.random().toString(32)}`,
+        type: 'text',
         thread: id,
         text: params.text,
         sender: {
           object: 'member',
           id: 'mem_test',
+          title: null,
           first_name: 'Test',
+          middle_name: null,
           last_name: 'test',
+          preferred_name: '',
+          address: null,
+          biological_sex: 'undisclosed',
+          email: null,
+          date_of_birth: '',
+          care_team: '',
+          created_at: '',
+          updated_at: '',
         },
         sent_at: new Date().toISOString(),
       }
@@ -39,7 +51,7 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children }) => {
       })
 
       try {
-        const created = await client.createMessage({
+        const created = await client.communications.messages.create({
           ...params,
           thread: id,
         })
@@ -70,10 +82,15 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children }) => {
       type: 'loadMoreMessages',
     })
 
-    const moreMessages = await client.listMessages({
-      thread: id,
-      starting_after: oldestMessage.id,
-    })
+    const moreMessages = await client.communications.messages.list(
+      {
+        thread: id,
+        starting_after: oldestMessage.id,
+      },
+      {
+        expand: ['data.sender'],
+      },
+    )
 
     dispatch({
       type: 'loadMoreMessagesSuccess',
@@ -97,11 +114,16 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children }) => {
   useEffect(() => {
     dispatch({ type: 'initializeThread', id })
 
-    client
-      .listMessages({
-        thread: id,
-        limit: 15,
-      })
+    client.communications.messages
+      .list(
+        {
+          thread: id,
+          limit: 15,
+        },
+        {
+          expand: ['data.sender'],
+        },
+      )
       .then((messages) => {
         dispatch({
           type: 'initializeThreadSuccess',

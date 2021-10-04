@@ -1,6 +1,6 @@
+import { Thread } from '@source-health/client'
 import React, { ComponentType, FunctionComponent, useCallback, useMemo } from 'react'
 
-import { Thread } from '../../../client'
 import { useClassFactory } from '../../../hooks'
 import { Callback } from '../../../types'
 import { Avatar, AvatarProps } from '../../Avatar'
@@ -29,8 +29,8 @@ export const ThreadListItem: FunctionComponent<ThreadListItemProps> = ({
   const className = useClassFactory('comms', 'thread-list-item')
   const handleClick = useCallback(() => onThreadSelected?.(thread), [thread])
   const parsedDate = useMemo(
-    () => new Date(thread.last_message.sent_at),
-    [thread.last_message.sent_at],
+    () => (thread.last_message?.sent_at ? new Date(thread.last_message.sent_at) : null),
+    [thread.last_message?.sent_at],
   )
 
   return (
@@ -41,9 +41,9 @@ export const ThreadListItem: FunctionComponent<ThreadListItemProps> = ({
       <div className={className('content')}>
         <div className={className('topline')}>
           <span className={className('topic')}>{thread.subject ?? '(no subject)'}</span>
-          <span className={className('last-message')}>{parsedDate.toUTCString()}</span>
+          <span className={className('last-message')}>{parsedDate?.toUTCString()}</span>
         </div>
-        <div className={className('preview')}>{thread.last_message.text}</div>
+        <div className={className('preview')}>{thread.last_message?.text}</div>
       </div>
     </div>
   )

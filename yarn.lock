@@ -1623,6 +1623,13 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@source-health/client@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@source-health/client/-/client-0.4.0.tgz#efa0e20e3b9b90fc77528f8c687ebf19fcb3437f"
+  integrity sha512-tTklKVdNxSVtDWkaeCI/hgM3nN6Kk9kV9fBUOpRLzDMiQFGMq+RScJGJ0ij/TkxMaMRp44RlwPjg2zt3xN9ooA==
+  dependencies:
+    jose "^3.19.0"
+
 "@storybook/addon-actions@6.3.8", "@storybook/addon-actions@^6.3.8":
   version "6.3.8"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-6.3.8.tgz#85e342c30b3118a7885a5cf0ea83c3bb03a18558"
@@ -7702,6 +7709,11 @@ jest@^27.2.1:
     "@jest/core" "^27.2.1"
     import-local "^3.0.2"
     jest-cli "^27.2.1"
+
+jose@^3.19.0:
+  version "3.19.0"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-3.19.0.tgz#4b64c89b619d6256268865ed223c5228203d50df"
+  integrity sha512-G5imz/7oSe8Ohg4EMEhGhMhN+yzACMw7NC7ZrEYSoJekQXHPf+TPQNc/XJkYRm6TFWIbf3HA4OHZhdRv8KsskA==
 
 js-string-escape@^1.0.1:
   version "1.0.1"

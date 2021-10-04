@@ -1,10 +1,8 @@
+import { ApiKey } from '@source-health/client'
 import { Meta, Story } from '@storybook/react'
 import React from 'react'
 
-import { ThreadList, ThreadListProps } from '..'
-import { SourceContext } from '../context/elements'
-
-import { StorybookSourceClient } from './StorybookSourceClient'
+import { SourceElements, ThreadList, ThreadListProps } from '..'
 
 export default {
   title: 'Components/ThreadList',
@@ -12,7 +10,7 @@ export default {
 } as Meta
 
 export const Simple: Story<ThreadListProps> = (args) => (
-  <SourceContext.Provider value={{ client: new StorybookSourceClient() }}>
+  <SourceElements authentication={new ApiKey('', '')}>
     <ThreadList {...args} />
-  </SourceContext.Provider>
+  </SourceElements>
 )
