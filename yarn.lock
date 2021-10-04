@@ -1623,10 +1623,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@source-health/client@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@source-health/client/-/client-0.4.0.tgz#efa0e20e3b9b90fc77528f8c687ebf19fcb3437f"
-  integrity sha512-tTklKVdNxSVtDWkaeCI/hgM3nN6Kk9kV9fBUOpRLzDMiQFGMq+RScJGJ0ij/TkxMaMRp44RlwPjg2zt3xN9ooA==
+"@source-health/client@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@source-health/client/-/client-0.4.1.tgz#6601c9b54174f45a456f3720a1912c671e205760"
+  integrity sha512-d5kdeK75SO4Bv7mGJT6huzGt/3L3SDqtBc1araE/yOkn/vSf65ymT/hE9QNp3mkoh8asS8Us+TY3qnN1nEYO+Q==
   dependencies:
     jose "^3.19.0"
 
