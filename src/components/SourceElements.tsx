@@ -1,15 +1,13 @@
-import { Authentication, Source } from '@source-health/client'
+import type { Source } from '@source-health/client'
 import React, { FunctionComponent, useMemo } from 'react'
 
 import { SourceContext, SourceContextValue } from '../context/elements'
 
-const DEFAULT_API_ENDPOINT = 'https://api.withcatalyst.com'
-
 export interface SourceElementsProps {
   /**
-   * Provide a token to use when making API calls, which will be used to initialize the client
+   * Provide an initialized Source client that eleements can use
    */
-  authentication: Authentication
+  client: Source
 
   /**
    * Override the API base URL to pass to the client
@@ -17,18 +15,12 @@ export interface SourceElementsProps {
   baseUrl?: string
 }
 
-export const SourceElements: FunctionComponent<SourceElementsProps> = ({
-  baseUrl = DEFAULT_API_ENDPOINT,
-  authentication,
-  children,
-}) => {
+export const SourceElements: FunctionComponent<SourceElementsProps> = ({ client, children }) => {
   const value = useMemo<SourceContextValue>(
     () => ({
-      client: new Source(authentication, {
-        baseUrl: baseUrl,
-      }),
+      client,
     }),
-    [baseUrl, authentication],
+    [client],
   )
 
   return <SourceContext.Provider value={value}>{children}</SourceContext.Provider>

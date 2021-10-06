@@ -1,4 +1,4 @@
-import { Message as MessageResource } from '@source-health/client'
+import type { Message as MessageResource } from '@source-health/client'
 import React, { FunctionComponent } from 'react'
 
 import { useClassFactory } from '../../../hooks'

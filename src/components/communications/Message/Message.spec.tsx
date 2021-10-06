@@ -1,4 +1,4 @@
-import { Member, Message as MessageResource, User } from '@source-health/client'
+import type { Member, Message as MessageResource, User } from '@source-health/client'
 import { render } from '@testing-library/react'
 import React from 'react'
 

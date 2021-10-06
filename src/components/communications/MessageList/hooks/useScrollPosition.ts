@@ -1,4 +1,4 @@
-import { Message } from '@source-health/client'
+import type { Message } from '@source-health/client'
 import { RefObject, useCallback, useEffect, useLayoutEffect, useRef } from 'react'
 
 import { Callback } from '../../../../types'

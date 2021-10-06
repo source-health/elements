@@ -1,4 +1,4 @@
-import { Source } from '@source-health/client'
+import type { Source } from '@source-health/client'
 import { useCallback, useEffect, useState } from 'react'
 
 import { useSourceClient } from '../context/elements'

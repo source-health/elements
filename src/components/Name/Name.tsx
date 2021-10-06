@@ -1,4 +1,4 @@
-import { Member, User } from '@source-health/client'
+import type { Member, User } from '@source-health/client'
 import React, { FunctionComponent } from 'react'
 
 export interface NameProps {

@@ -1,4 +1,4 @@
-import { MessageCreateParams, Message } from '@source-health/client'
+import type { MessageCreateParams, Message } from '@source-health/client'
 import { createContext, useContext } from 'react'
 
 export interface ThreadContextValue {

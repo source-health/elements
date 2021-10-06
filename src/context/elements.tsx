@@ -1,4 +1,4 @@
-import { Source } from '@source-health/client'
+import type { Source } from '@source-health/client'
 import { createContext, useContext } from 'react'
 
 export interface SourceContextValue {

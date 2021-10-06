@@ -1,4 +1,4 @@
-import './index.scss'
+require('./index.scss') // eslint-disable-line
 
 export * from './components/SourceElements'
 export * from './components/Loading'

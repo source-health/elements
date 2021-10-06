@@ -1,4 +1,4 @@
-import { MessageCreateParams, Message } from '@source-health/client'
+import type { MessageCreateParams, Message } from '@source-health/client'
 import React, { FunctionComponent, useCallback, useEffect, useMemo, useReducer } from 'react'
 
 import { useSourceClient } from '../../../context/elements'
@@ -51,10 +51,15 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children }) => {
       })
 
       try {
-        const created = await client.communications.messages.create({
-          ...params,
-          thread: id,
-        })
+        const created = await client.communications.messages.create(
+          {
+            ...params,
+            thread: id,
+          },
+          {
+            expand: ['sender'],
+          },
+        )
 
         dispatch({
           type: 'sendMessageSuccess',

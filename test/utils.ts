@@ -1,4 +1,4 @@
-import { Source } from '@source-health/client'
+import type { Source } from '@source-health/client'
 import { createElement, FunctionComponent } from 'react'
 
 import { SourceContext } from '../src/context/elements'

@@ -1,4 +1,4 @@
-import { Thread, ThreadStatus } from '@source-health/client'
+import type { Thread, ThreadStatus } from '@source-health/client'
 import React, { ComponentType, FunctionComponent } from 'react'
 
 import { usePaginatedList } from '../../../hooks'
