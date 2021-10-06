@@ -23,8 +23,7 @@ function generateConfig(name) {
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
     externals: {
-      react: 'React',
-      'react-dom': 'ReactDOM',
+      react: 'react',
     },
     module: {
       rules: [
