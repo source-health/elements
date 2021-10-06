@@ -1,7 +1,9 @@
 {
   "name": "@source-health/elements-react",
   "version": "0.1.0-beta.0",
-  "main": "index.js",
+  "main": "dist/elements-react.js",
+  "browser": "dist/elements-react.min.js",
+  "typings": "dist/index.d.ts",
   "repository": "git@github.com:source-health/elements.git",
   "author": "Daniel Schwartz <daniel@sourcehealth.com>",
   "license": "MIT",

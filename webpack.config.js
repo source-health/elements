@@ -54,4 +54,4 @@ function generateConfig(name) {
   }
 }
 
-module.exports = ['source-client', 'source-client.min'].map((key) => generateConfig(key))
+module.exports = ['elements-react', 'elements-react.min'].map((key) => generateConfig(key))
