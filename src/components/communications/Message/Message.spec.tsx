@@ -1,4 +1,10 @@
-import type { Member, Message as MessageResource, User } from '@source-health/client'
+import type {
+  Expandable,
+  Member,
+  Message as MessageResource,
+  Thread,
+  User,
+} from '@source-health/client'
 import { render } from '@testing-library/react'
 import React from 'react'
 
@@ -9,7 +15,7 @@ describe('Message', () => {
     object: 'message',
     id: 'msg_123',
     text: 'This is a message',
-    thread: 'thr_asdf',
+    thread: 'thr_asdf' as Expandable<Thread>,
     type: 'text',
     sender: {
       object: 'user',
@@ -17,6 +23,8 @@ describe('Message', () => {
       first_name: 'Colin',
       last_name: 'Morelli',
     } as User,
+    impersonated_by: null,
+    attachments: [],
     sent_at: new Date().toISOString(),
   }
 
@@ -24,7 +32,7 @@ describe('Message', () => {
     object: 'message',
     id: 'msg_123',
     text: 'This is a message',
-    thread: 'thr_asdf',
+    thread: 'thr_asdf' as Expandable<Thread>,
     type: 'text',
     sender: {
       object: 'member',
@@ -32,6 +40,8 @@ describe('Message', () => {
       first_name: 'Colin',
       last_name: 'Morelli',
     } as Member,
+    impersonated_by: null,
+    attachments: [],
     sent_at: new Date().toISOString(),
   }
 

@@ -1,4 +1,4 @@
-import type { Thread } from '@source-health/client'
+import type { Expandable, Member, Thread } from '@source-health/client'
 import { render, waitForElementToBeRemoved } from '@testing-library/react'
 import React from 'react'
 
@@ -61,13 +61,16 @@ describe('ThreadList', () => {
       id: '123',
       subject: 'Subject: First Thread',
       assignee: null,
-      member: '',
+      member: '' as Expandable<Member>,
       status: 'closed',
       last_message: {
         sent_at: '',
-        sender: '',
+        sender: '' as Expandable<Member>,
         text: 'Preview: This is a test of thread 123',
+        attachments: [],
       },
+      member_last_read: null,
+      last_message_at: new Date().toISOString(),
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       closed_at: null,
@@ -78,13 +81,16 @@ describe('ThreadList', () => {
       id: '456',
       subject: 'Subject: Second Thread',
       assignee: null,
-      member: '',
+      member: '' as Expandable<Member>,
       status: 'closed',
       last_message: {
         sent_at: '',
-        sender: '',
+        sender: '' as Expandable<Member>,
         text: 'Preview: This is a test of thread 456',
+        attachments: [],
       },
+      member_last_read: null,
+      last_message_at: new Date().toISOString(),
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       closed_at: null,
