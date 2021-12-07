@@ -19,6 +19,13 @@
     align-items: flex-start;
   }
 
+  &--attachments {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0.125rem 0;
+  }
+
   &--meta {
     display: inline-flex;
     color: #929CA6;

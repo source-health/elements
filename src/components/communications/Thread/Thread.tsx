@@ -1,4 +1,10 @@
-import type { MessageCreateParams, Message } from '@source-health/client'
+import type {
+  CareTeam,
+  MessageCreateParams,
+  Message,
+  Thread as ThreadResource,
+  Expandable,
+} from '@source-health/client'
 import React, { FunctionComponent, useCallback, useEffect, useMemo, useReducer } from 'react'
 
 import { useSourceClient } from '../../../context/elements'
@@ -24,7 +30,7 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children }) => {
         object: 'message',
         id: `msg_${Math.random().toString(32)}`,
         type: 'text',
-        thread: id,
+        thread: id as unknown as Expandable<ThreadResource>,
         text: params.text,
         sender: {
           object: 'member',
@@ -38,11 +44,13 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children }) => {
           biological_sex: 'undisclosed',
           email: null,
           date_of_birth: '',
-          care_team: '',
+          care_team: '' as unknown as Expandable<CareTeam>,
           created_at: '',
           updated_at: '',
         },
         sent_at: new Date().toISOString(),
+        attachments: [],
+        impersonated_by: null,
       }
 
       dispatch({
@@ -126,7 +134,7 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children }) => {
           limit: 15,
         },
         {
-          expand: ['data.sender'],
+          expand: ['data.sender', 'data.attachments.resource'],
         },
       )
       .then((messages) => {
