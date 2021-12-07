@@ -12,6 +12,9 @@
 
   &--link {
     text-decoration: none;
+    min-width: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
   
   &--link:hover {

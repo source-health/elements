@@ -75,4 +75,48 @@ describe('Message', () => {
 
     expect(element2).toHaveClass('source-comms__message--outgoing')
   })
+
+  it('should render message attachments', async () => {
+    const message: MessageResource = {
+      object: 'message',
+      id: 'msg_123',
+      text: 'This is a message',
+      thread: 'thr_asdf' as Expandable<Thread>,
+      type: 'text',
+      sender: {
+        object: 'user',
+        id: 'usr_123',
+        first_name: 'Colin',
+        last_name: 'Morelli',
+      } as User,
+      impersonated_by: null,
+      attachments: [
+        {
+          type: 'file',
+          resource: {
+            object: 'file',
+            id: 'fil_128',
+            name: 'Test File.pdf',
+            mime_type: 'application/pdf',
+            size: 1203,
+            purpose: 'message_attachment',
+            url: 'https://example.org/test-file',
+            url_expires_at: new Date().toISOString(),
+            created_at: new Date().toISOString(),
+          },
+        },
+      ],
+      sent_at: new Date().toISOString(),
+    }
+
+    const { container, getByText } = render(<Message message={message} />)
+    const element = container.firstElementChild
+
+    expect(element).toHaveClass('source-comms__message--incoming')
+
+    const attachmentLink = getByText('Test File.pdf')
+    expect(attachmentLink.getAttribute('href')).toEqual('https://example.org/test-file')
+    expect(attachmentLink.hasAttribute('download')).toBeTruthy()
+    expect(attachmentLink).toHaveClass('source-comms__message-attachment--link')
+  })
 })
