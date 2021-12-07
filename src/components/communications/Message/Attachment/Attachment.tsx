@@ -6,7 +6,7 @@ import { expand } from '../../../../utils'
 
 export interface AttachmentProps {
   /**
-   * Message attachment to render int his component
+   * Message attachment to render
    */
   attachment: MessageAttachment
 }

@@ -14,6 +14,7 @@
   "scripts": {
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
+    "build": "webpack --config webpack.config.js",
     "check:lint": "eslint --ext .ts,.tsx,.js src",
     "check:typescript": "tsc --noEmit",
     "test": "jest"
