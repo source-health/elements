@@ -1,6 +1,6 @@
 {
   "name": "@source-health/elements-react",
-  "version": "0.1.0-beta.3",
+  "version": "0.1.0-beta.4",
   "main": "dist/elements-react.js",
   "browser": "dist/elements-react.min.js",
   "typings": "dist/index.d.ts",
@@ -14,19 +14,22 @@
   "scripts": {
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
+    "build": "webpack --config webpack.config.js",
     "check:lint": "eslint --ext .ts,.tsx,.js src",
     "check:typescript": "tsc --noEmit",
     "test": "jest"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
-    "@source-health/client": "^0.5.0",
-    "@storybook/addon-actions": "^6.3.8",
+    "@source-health/client": "^0.7.6",
+    "@storybook/addon-actions": "^6.4.8",
     "@storybook/addon-contexts": "^5.3.21",
-    "@storybook/addon-essentials": "^6.3.8",
-    "@storybook/addon-links": "^6.3.8",
+    "@storybook/addon-essentials": "^6.4.8",
+    "@storybook/addon-links": "^6.4.8",
+    "@storybook/builder-webpack5": "^6.4.8",
+    "@storybook/manager-webpack5": "^6.4.8",
     "@storybook/preset-scss": "^1.0.3",
-    "@storybook/react": "^6.3.8",
+    "@storybook/react": "^6.4.8",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.0",
     "@testing-library/react-hooks": "^7.0.2",
@@ -56,7 +59,7 @@
     "webpack-cli": "^4.8.0"
   },
   "peerDependencies": {
-    "@source-health/client": "^0.5.0",
+    "@source-health/client": "^0.7.6",
     "react": "^17.0.2"
   },
   "jest": {

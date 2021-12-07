@@ -52,7 +52,7 @@ describe('Thread', () => {
         thread: 'threadTest',
       },
       {
-        expand: ['data.sender'],
+        expand: ['data.sender', 'data.attachments.resource'],
       },
     )
 

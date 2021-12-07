@@ -1,0 +1,22 @@
+.source-comms__message-attachment {
+  display: flex;
+  align-items: center;
+  border-radius: 0.5rem;
+  max-width: 250px;
+  min-width: 0;
+
+  &--icon {
+    color: #A0AEC0;
+    margin-right: 0.25rem;
+  }
+
+  &--link {
+    flex: 1;
+    text-decoration: none;
+    min-width: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: inherit;
+  }
+}

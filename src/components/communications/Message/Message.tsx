@@ -6,6 +6,8 @@ import { Formatter } from '../../../types'
 import { expand } from '../../../utils'
 import { Name } from '../../Name'
 
+import { Attachment } from './Attachment'
+
 export interface MessageProps {
   /**
    * Message that should be rendered in this component
@@ -58,7 +60,16 @@ export const Message: FunctionComponent<MessageProps> = ({
         <Avatar size={32} />
       </div> */}
       <div className={className('container')}>
-        <div className={className('content')}>{message.text}</div>
+        <div className={className('contents')}>
+          <div className={className('content')}>{message.text}</div>
+          {message.attachments.length > 0 && (
+            <div className={`${className('content')} ${className('attachment')}`}>
+              {message.attachments.map((attachment) => (
+                <Attachment key={expand(attachment.resource).id} attachment={attachment} />
+              ))}
+            </div>
+          )}
+        </div>
         <div className={className('meta')}>
           <div className={className('sender')}>
             <Name person={message.sender} />
