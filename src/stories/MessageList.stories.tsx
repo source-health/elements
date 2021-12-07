@@ -15,8 +15,8 @@ export const Simple: Story<MessageListProps> = (args) => (
     client={
       new Source(
         new UserKey(
-          'uk_0eWy5mTpsSpnRAp1oIJEXnJHZlG7IoSk5L3LoRa7sS1MdChHzZfxHfeOUwGntyVsvoErB65xF7moaIJuL6KY7ygtJdSJa5IZ',
-          false,
+          'uk_SUUqS9xxDJPg0EvGnTHz7nRh8MOYqnOdoeYiWn1dYpCAac1o7pgSGTlBwWcQEohyV54yGHo5QQL3vIeGUBhTQrHGLB1BH2fq',
+          true,
         ),
         {
           baseUrl: 'http://localhost:3000',
@@ -24,7 +24,7 @@ export const Simple: Story<MessageListProps> = (args) => (
       )
     }
   >
-    <Thread id="thrd_PJAcMMhZwhzz6z12A4c2">
+    <Thread id="thrd_LyBsSYXNXfqzMsPObitv">
       <MessageList {...args} />
       <MessageInput />
     </Thread>

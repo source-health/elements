@@ -60,14 +60,16 @@ export const Message: FunctionComponent<MessageProps> = ({
         <Avatar size={32} />
       </div> */}
       <div className={className('container')}>
-        <div className={className('content')}>{message.text}</div>
-        {message.attachments.length > 0 && (
-          <div className={className('attachments')}>
-            {message.attachments.map((attachment) => (
-              <Attachment key={expand(attachment.resource).id} attachment={attachment} />
-            ))}
-          </div>
-        )}
+        <div className={className('contents')}>
+          <div className={className('content')}>{message.text}</div>
+          {message.attachments.length > 0 && (
+            <div className={`${className('content')} ${className('attachment')}`}>
+              {message.attachments.map((attachment) => (
+                <Attachment key={expand(attachment.resource).id} attachment={attachment} />
+              ))}
+            </div>
+          )}
+        </div>
         <div className={className('meta')}>
           <div className={className('sender')}>
             <Name person={message.sender} />

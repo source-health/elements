@@ -1,6 +1,6 @@
 .source-comms__message {
   font-size: 0.875rem;
-  margin: 0.25rem 0;
+  margin: 0;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -42,8 +42,9 @@
   &--content {
     background: #f6f6f6;
     padding: 0.5rem 0.75rem;
-    border-radius: 1.5rem;
+    border-radius: 0.15rem;
     display: inline-flex;
+    margin: 0.125rem 0;
   }
 
   &--image {
@@ -58,22 +59,33 @@
     visibility: hidden;
   }
 
-  &--top &--content {
-    border-bottom-left-radius: 0.125rem;
+  &--contents {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  &--bottom &--content {
-    border-top-left-radius: 0.125rem;
+  &--top &--content:first-child, &--single &--content:first-child {
+    border-top-left-radius: 1.5rem;
   }
 
-  &--middle &--content {
-    border-top-left-radius: 0.125rem;
-    border-bottom-left-radius: 0.125rem;
+  &--bottom &--content:last-child, &--single &--content:last-child {
+    border-bottom-left-radius: 1.5rem;
   }
 
   &--outgoing {
     flex-direction: row-reverse;
     align-items: flex-end;
+  }
+
+  &--incoming &--content {
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+  }
+
+  &--outgoing &--content {
+    border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
   }
 
   &--outgoing &--image {
@@ -91,5 +103,13 @@
 
   &--outgoing &--sender {
     display: none;
+  }
+
+  &--attachment {
+    transition: background-color 150ms ease-out;
+  }
+
+  &--attachment:hover {
+    background: #eaeaea;
   }
 }
