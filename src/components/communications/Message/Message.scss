@@ -5,11 +5,13 @@
   flex-direction: row;
   align-items: flex-start;
 
-  &--top, &--single {
+  &--top,
+  &--single {
     margin-top: 1rem;
   }
 
-  &--bottom, &--single {
+  &--bottom,
+  &--single {
     margin-bottom: 2rem;
   }
 
@@ -28,7 +30,7 @@
 
   &--meta {
     display: inline-flex;
-    color: #929CA6;
+    color: #929ca6;
     font-size: 0.75rem;
     padding: 0 0.75rem;
     margin: 0.125rem 0 -1rem 0;
@@ -45,17 +47,20 @@
     border-radius: 0.15rem;
     display: inline-flex;
     margin: 0.125rem 0;
+    white-space: pre-wrap;
   }
 
   &--image {
     margin: 0 0.5rem;
   }
 
-  &--top &--meta, &--middle &--meta {
+  &--top &--meta,
+  &--middle &--meta {
     display: none;
   }
 
-  &--top &--image, &--middle &--image {
+  &--top &--image,
+  &--middle &--image {
     visibility: hidden;
   }
 
@@ -65,11 +70,13 @@
     align-items: flex-start;
   }
 
-  &--top &--content:first-child, &--single &--content:first-child {
+  &--top &--content:first-child,
+  &--single &--content:first-child {
     border-top-left-radius: 1.5rem;
   }
 
-  &--bottom &--content:last-child, &--single &--content:last-child {
+  &--bottom &--content:last-child,
+  &--single &--content:last-child {
     border-bottom-left-radius: 1.5rem;
   }
 
