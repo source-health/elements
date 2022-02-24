@@ -1,6 +1,6 @@
 #  Source Elements
 
-:bangbang: | This SDK is still in beta, and may change significantly before its public release.
+:bangbang: | This SDK is still in preview.
 :---: | :---
 
 This project contains Source Elements, our React based member facing SDK. This SDK makes it easy for you to build member side experiences and uses an underlying `@source-health/client` that you provide to it to make calls using your API keys to the Source Health API. 
