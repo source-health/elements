@@ -1,23 +1,24 @@
-import { renderHook } from '@testing-library/react-hooks'
+import { act, renderHook } from '@testing-library/react-hooks'
 import React, { FunctionComponent } from 'react'
 
 import { createElementsWrapper } from '../../../../test/utils'
 import { useThreadContext } from '../../../context/thread'
 
-import { Thread } from './Thread'
+import { ThreadProps, Thread } from './Thread'
 
 describe('Thread', () => {
   const [wrapper, client] = createElementsWrapper({
     communications: {
       messages: {
         list: jest.fn(),
+        create: jest.fn(),
       },
     },
   })
 
-  const ThreadWrapper: FunctionComponent<{ id: string }> = ({ id, children }) =>
+  const ThreadWrapper: FunctionComponent<ThreadProps> = (props) =>
     wrapper({
-      children: <Thread id={id}>{children}</Thread>,
+      children: <Thread {...props} />,
     })
 
   it('should load messages', async () => {
@@ -67,5 +68,99 @@ describe('Thread', () => {
     expect(result.current.isLoading).toBeFalsy()
     expect(result.current.messages).toEqual([message])
     expect(result.current.hasMoreMessages).toBeFalsy()
+  })
+
+  it('should call onSend handler', async () => {
+    const message = {
+      object: 'message' as const,
+      id: 'msg1',
+      type: 'text' as const,
+      thread: 'threadTest',
+      text: 'Hello!',
+      sender: '',
+      sent_at: new Date().toISOString(),
+    }
+
+    client.communications.messages.list.mockReturnValue(
+      Promise.resolve({
+        object: 'list',
+        data: [message],
+        has_more: false,
+      }),
+    )
+
+    client.communications.messages.create.mockReturnValue(
+      Promise.resolve({
+        object: 'message',
+        id: 'asdf',
+        sender: {},
+      }),
+    )
+
+    const onSendHandler = jest.fn()
+    const { result, waitForNextUpdate } = renderHook(() => useThreadContext(), {
+      wrapper: ThreadWrapper,
+      initialProps: {
+        id: 'threadTest',
+        onSend: onSendHandler,
+      },
+    })
+
+    await waitForNextUpdate()
+
+    await act(async () => {
+      await result.current.sendMessage({
+        text: 'Hello World',
+      })
+
+      expect(onSendHandler).toHaveBeenCalled()
+    })
+  })
+
+  it('does not call onSend handler when message send fails', async () => {
+    const message = {
+      object: 'message' as const,
+      id: 'msg1',
+      type: 'text' as const,
+      thread: 'threadTest',
+      text: 'Hello!',
+      sender: '',
+      sent_at: new Date().toISOString(),
+    }
+
+    client.communications.messages.list.mockReturnValue(
+      Promise.resolve({
+        object: 'list',
+        data: [message],
+        has_more: false,
+      }),
+    )
+
+    client.communications.messages.create.mockReturnValue(
+      Promise.reject(new Error('Failed to send')),
+    )
+
+    const onSendHandler = jest.fn()
+    const { result } = renderHook(() => useThreadContext(), {
+      wrapper: ThreadWrapper,
+      initialProps: {
+        id: 'threadTest',
+        onSend: onSendHandler,
+      },
+    })
+
+    await act(async () => {
+      try {
+        await result.current.sendMessage({
+          text: 'Hello World',
+        })
+
+        fail('Should have failed')
+      } catch (ex) {
+        // ignored
+      }
+
+      expect(onSendHandler).not.toHaveBeenCalled()
+    })
   })
 })

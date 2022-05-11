@@ -17,9 +17,14 @@ export interface ThreadProps {
    * Identifier of the thread that should be rendered
    */
   id: string
+
+  /**
+   * Callback invoked when a message is sent using elements
+   */
+  onSend?: () => void
 }
 
-export const Thread: FunctionComponent<ThreadProps> = ({ id, children }) => {
+export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend }) => {
   const client = useSourceClient()
   const [state, dispatch] = useReducer(threadReducer, threadInitialState)
   const { messages, isLoading, hasMoreMessages } = state
@@ -74,6 +79,8 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children }) => {
           temporaryMessage: message,
           message: created,
         })
+
+        onSend?.()
       } catch (ex) {
         dispatch({
           type: 'sendMessageFailure',
