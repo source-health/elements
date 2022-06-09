@@ -46,10 +46,17 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
           last_name: 'test',
           preferred_name: '',
           address: null,
-          biological_sex: 'undisclosed',
           email: null,
           date_of_birth: '',
           care_team: '' as unknown as Expandable<CareTeam>,
+          gender_identity: null,
+          sex_at_birth: 'undisclosed',
+          administrative_gender: null,
+          time_zone: null,
+          pronouns: null,
+          phone_numbers: [],
+          profile_image: null,
+          license_region: null,
           created_at: '',
           updated_at: '',
         },
@@ -108,7 +115,7 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
         starting_after: oldestMessage.id,
       },
       {
-        expand: ['data.sender'],
+        expand: ['data.sender', 'data.attachments.resource'],
       },
     )
 
