@@ -77,7 +77,7 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
             thread: id,
           },
           {
-            expand: ['sender'],
+            expand: ['sender', 'attachments.resource'],
           },
         )
 
