@@ -1638,10 +1638,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@source-health/client@^0.26.0":
-  version "0.26.0"
-  resolved "https://registry.yarnpkg.com/@source-health/client/-/client-0.26.0.tgz#822c500237d2c93e07811e08421781cb1cb64f05"
-  integrity sha512-40Z4N7d8aGzQKV0YxM8yi9fiDAzZz3ndQXaW4xYkMfGkLmeT8KiTlKIMb7//I5Q27jnVaoWBRJQSY1UjqK5dNA==
+"@source-health/client@^0.27.1":
+  version "0.27.1"
+  resolved "https://registry.yarnpkg.com/@source-health/client/-/client-0.27.1.tgz#b4aba7161a58a618f43e2cd148ed3bf2f3c4a526"
+  integrity sha512-dTYvKeKlm8c614J8FIF/fKBEhhfZZImb+UM5VTlM33hq/I0IqJVR5+ZnGuuDNQGXcUX/iCeABhknDq5JbmIvXg==
   dependencies:
     jose "^3.19.0"
 
@@ -8245,9 +8245,9 @@ jest@^27.2.1:
     jest-cli "^27.2.1"
 
 jose@^3.19.0:
-  version "3.19.0"
-  resolved "https://registry.yarnpkg.com/jose/-/jose-3.19.0.tgz#4b64c89b619d6256268865ed223c5228203d50df"
-  integrity sha512-G5imz/7oSe8Ohg4EMEhGhMhN+yzACMw7NC7ZrEYSoJekQXHPf+TPQNc/XJkYRm6TFWIbf3HA4OHZhdRv8KsskA==
+  version "3.20.3"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-3.20.3.tgz#a074f684b07e49b35c075d97561883e3c637abf2"
+  integrity sha512-Z4a5Nl4pmGivdSgaq+a5EbNjrvSO4vtBTmVy5C3HNxWfJ92aG8DTNZrQywowxyOlSqdX/BmCPAy/ieElXDM3pw==
 
 js-string-escape@^1.0.1:
   version "1.0.1"

@@ -1,5 +1,5 @@
-import type { Source } from '@source-health/client'
-import React, { FunctionComponent, useMemo } from 'react'
+import type { Member, Source } from '@source-health/client'
+import React, { FunctionComponent, useEffect, useMemo, useState } from 'react'
 
 import { SourceContext, SourceContextValue } from '../context/elements'
 
@@ -16,11 +16,20 @@ export interface SourceElementsProps {
 }
 
 export const SourceElements: FunctionComponent<SourceElementsProps> = ({ client, children }) => {
+  const [member, setMember] = useState<Member | null>(null)
+  useEffect(() => {
+    client.members.retrieve('current').then((member) => {
+      console.log('Member retirved', member)
+      setMember(member)
+    })
+  }, [])
+
   const value = useMemo<SourceContextValue>(
     () => ({
       client,
+      member,
     }),
-    [client],
+    [client, member],
   )
 
   return <SourceContext.Provider value={value}>{children}</SourceContext.Provider>

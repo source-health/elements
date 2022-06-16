@@ -51,7 +51,11 @@ export const Message: FunctionComponent<MessageProps> = ({
       : className('single')
   const isOutgoing = expand(message.sender).id.startsWith('mem_')
   const directionClassName = className(isOutgoing ? 'outgoing' : 'incoming')
-  const classNames = [className(), groupClassName, directionClassName].join(' ')
+  const classNamesList = [className(), groupClassName, directionClassName]
+  if (message.redacted_at) {
+    classNamesList.push(className('redacted'))
+  }
+  const classNames = classNamesList.join(' ')
   const date = new Date(message.sent_at)
 
   return (

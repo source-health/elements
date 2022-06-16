@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
-    "@source-health/client": "^0.26.0",
+    "@source-health/client": "^0.27.1",
     "@storybook/addon-actions": "^6.4.8",
     "@storybook/addon-contexts": "^5.3.21",
     "@storybook/addon-essentials": "^6.4.8",
@@ -59,7 +59,7 @@
     "webpack-cli": "^4.8.0"
   },
   "peerDependencies": {
-    "@source-health/client": "^0.7.6",
+    "@source-health/client": "^0.27.1",
     "react": "^17.0.2"
   },
   "jest": {
