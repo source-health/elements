@@ -64,9 +64,9 @@ export const Message: FunctionComponent<MessageProps> = ({
           <div className={className('content')}>{message.text}</div>
           {message.attachments.length > 0 && (
             <div className={`${className('content')} ${className('attachment')}`}>
-              {message.attachments.map((attachment) => (
-                <Attachment key={expand(attachment.resource).id} attachment={attachment} />
-              ))}
+              {message.attachments.map((attachment, index) => {
+                return <Attachment key={index} attachment={attachment} />
+              })}
             </div>
           )}
         </div>

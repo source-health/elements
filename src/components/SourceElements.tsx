@@ -5,7 +5,7 @@ import { SourceContext, SourceContextValue } from '../context/elements'
 
 export interface SourceElementsProps {
   /**
-   * Provide an initialized Source client that eleements can use
+   * Provide an initialized Source client that elements can use
    */
   client: Source
 
