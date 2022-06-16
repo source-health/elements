@@ -2,7 +2,6 @@ import type { MessageAttachment } from '@source-health/client'
 import React, { FunctionComponent } from 'react'
 
 import { useClassFactory } from '../../../../hooks'
-import { expand } from '../../../../utils'
 
 export interface AttachmentProps {
   /**
@@ -14,9 +13,7 @@ export interface AttachmentProps {
 export const Attachment: FunctionComponent<AttachmentProps> = ({ attachment }) => {
   const className = useClassFactory('comms', 'message-attachment')
   const url = attachment.url
-  const name = attachment.resource
-    ? expand(attachment.resource).name
-    : attachment.description ?? url
+  const name = attachment.description ?? url
 
   return (
     <div className={className()}>
