@@ -19,10 +19,9 @@ export const SourceElements: FunctionComponent<SourceElementsProps> = ({ client,
   const [member, setMember] = useState<Member | null>(null)
   useEffect(() => {
     client.members.retrieve('current').then((member) => {
-      console.log('Member retirved', member)
       setMember(member)
     })
-  }, [])
+  }, [client])
 
   const value = useMemo<SourceContextValue>(
     () => ({
