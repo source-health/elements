@@ -1,4 +1,4 @@
-import type { Source } from '@source-health/client'
+import type { Member, Source } from '@source-health/client'
 import { createContext, useContext } from 'react'
 
 export interface SourceContextValue {
@@ -11,6 +11,8 @@ export interface SourceContextValue {
    * transparently by the application
    */
   readonly client: Source
+
+  readonly member: Member | null
 }
 
 export const SourceContext = createContext<SourceContextValue | null>(null)
@@ -29,4 +31,9 @@ export function useSourceContext(): SourceContextValue {
 export function useSourceClient(): Source {
   const { client } = useSourceContext()
   return client
+}
+
+export function useMember(): Member | null {
+  const { member } = useSourceContext()
+  return member
 }

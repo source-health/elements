@@ -26,6 +26,7 @@ describe('Message', () => {
     impersonated_by: null,
     attachments: [],
     sent_at: new Date().toISOString(),
+    redacted_at: null,
   }
 
   const outgoingMessage: MessageResource = {
@@ -43,6 +44,7 @@ describe('Message', () => {
     impersonated_by: null,
     attachments: [],
     sent_at: new Date().toISOString(),
+    redacted_at: null,
   }
 
   it('should render a message', async () => {
@@ -111,6 +113,7 @@ describe('Message', () => {
         },
       ],
       sent_at: new Date().toISOString(),
+      redacted_at: null,
     }
 
     const { container, getByText } = render(<Message message={message} />)
