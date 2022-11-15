@@ -1,9 +1,8 @@
 import type {
-  CareTeam,
-  MessageCreateParams,
-  Message,
-  Thread as ThreadResource,
   Expandable,
+  Message,
+  MessageCreateParams,
+  Thread as ThreadResource,
 } from '@source-health/client'
 import React, { FunctionComponent, useCallback, useEffect, useMemo, useReducer } from 'react'
 
@@ -32,37 +31,23 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
 
   const sendMessage = useCallback(
     async (params: Omit<MessageCreateParams, 'thread'>) => {
+      if (!member) {
+        return
+      }
+
       const message: Message = {
         object: 'message',
         id: `msg_${Math.random().toString(32)}`,
         type: 'text',
         thread: id as unknown as Expandable<ThreadResource>,
         text: params.text,
-        sender: member || {
-          object: 'member',
-          id: 'mem_test',
-          title: null,
-          first_name: '',
-          middle_name: null,
-          last_name: '',
-          preferred_name: '',
-          address: null,
-          email: null,
-          date_of_birth: '',
-          care_team: '' as unknown as Expandable<CareTeam>,
-          gender_identity: null,
-          sex_at_birth: 'undisclosed',
-          administrative_gender: null,
-          time_zone: null,
-          pronouns: null,
-          phone_numbers: [],
-          profile_image: null,
-          license_region: null,
-          tags: [],
-          enrollment_status: 'enrolled',
-          created_at: '',
-          updated_at: '',
-        },
+        sender: member,
+        channel_type: 'chat',
+        channel: null,
+        to: null,
+        from: null,
+        direction: 'inbound',
+        status: 'sent',
         sent_at: new Date().toISOString(),
         attachments: [],
         impersonated_by: null,
@@ -81,7 +66,7 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
             thread: id,
           },
           {
-            expand: ['sender', 'attachments.resource'],
+            expand: ['sender', 'sender.profile_image', 'attachments.resource'],
           },
         )
 
@@ -119,7 +104,7 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
         starting_after: oldestMessage.id,
       },
       {
-        expand: ['data.sender', 'data.attachments.resource'],
+        expand: ['data.sender', 'data.sender.profile_image', 'data.attachments.resource'],
       },
     )
 
@@ -139,7 +124,7 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
       fetchMoreMessages: fetchMoreMessages,
       sendMessage,
     }),
-    [id, messages, fetchMoreMessages, hasMoreMessages, isLoading],
+    [id, messages, fetchMoreMessages, sendMessage, hasMoreMessages, isLoading],
   )
 
   useEffect(() => {
@@ -152,7 +137,7 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
           limit: 15,
         },
         {
-          expand: ['data.sender', 'data.attachments.resource'],
+          expand: ['data.sender', 'data.sender.profile_image', 'data.attachments.resource'],
         },
       )
       .then((messages) => {

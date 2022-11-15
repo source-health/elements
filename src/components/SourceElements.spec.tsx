@@ -1,4 +1,4 @@
-import { Source, Token } from '@source-health/client'
+import { JWTAuthentication, Source } from '@source-health/client'
 import { renderHook } from '@testing-library/react-hooks'
 import React, { FC } from 'react'
 
@@ -14,7 +14,7 @@ jest.mock('@source-health/client', () => {
         retrieve,
       },
     }),
-    Token: jest.fn(),
+    JWTAuthentication: jest.fn(),
   }
 })
 
@@ -60,11 +60,11 @@ describe('SourceElements', () => {
     expect(result.current.client).not.toBeNull()
     expect(result.current.member).toBe(member)
     expect(retrieve).toHaveBeenCalledTimes(1)
-    expect(retrieve).toHaveBeenCalledWith('current')
+    expect(retrieve).toHaveBeenCalledWith('current', { expand: ['profile_image'] })
   })
 
   it('with token should create a context that is made available to other components', async () => {
-    const token = new Token('')
+    const token = new JWTAuthentication('')
     const wrapper: FC<unknown> = ({ children }) => (
       <SourceElements token={token}>{children}</SourceElements>
     )
@@ -76,6 +76,6 @@ describe('SourceElements', () => {
     expect(result.current.client).not.toBeNull()
     expect(result.current.member).toBe(member)
     expect(retrieve).toHaveBeenCalledTimes(1)
-    expect(retrieve).toHaveBeenCalledWith('current')
+    expect(retrieve).toHaveBeenCalledWith('current', { expand: ['profile_image'] })
   })
 })

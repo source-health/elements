@@ -1,4 +1,4 @@
-import type { CareTeam, Expandable, Source } from '@source-health/client'
+import type { Member, Source } from '@source-health/client'
 import { createElement, FunctionComponent } from 'react'
 
 import { SourceContext } from '../src/context/elements'
@@ -24,12 +24,13 @@ type MockableTree<T> = Partial<MockableKeys<T>>
  */
 export function createElementsWrapper<T extends MockableTree<Source>>(
   client: T,
+  member: Member | null = null,
 ): [FunctionComponent<unknown>, T] {
   const wrapper: FunctionComponent<unknown> = ({ children }) =>
     createElement(SourceContext.Provider, {
       value: {
         client: client as any, // eslint-disable-line
-        member: null,
+        member,
       },
       children,
     })

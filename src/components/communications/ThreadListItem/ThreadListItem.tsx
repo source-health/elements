@@ -3,6 +3,7 @@ import React, { ComponentType, FunctionComponent, useCallback, useMemo } from 'r
 
 import { useClassFactory } from '../../../hooks'
 import { Callback } from '../../../types'
+import { expand } from '../../../utils'
 import { Avatar, AvatarProps } from '../../Avatar'
 
 export interface ThreadListItemProps {
@@ -33,10 +34,15 @@ export const ThreadListItem: FunctionComponent<ThreadListItemProps> = ({
     [thread.last_message?.sent_at],
   )
 
+  const lastMessageSender = expand(thread.last_message.sender)
+
   return (
     <div className={className()} onClick={handleClick}>
       <div className={className('image')}>
-        <AvatarComponent size={24} />
+        <AvatarComponent
+          size={24}
+          file={lastMessageSender.profile_image ? expand(lastMessageSender.profile_image) : null}
+        />
       </div>
       <div className={className('content')}>
         <div className={className('topline')}>
