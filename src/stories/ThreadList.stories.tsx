@@ -1,4 +1,4 @@
-import { Source, UserKey } from '@source-health/client'
+import { Source, UserAuthentication } from '@source-health/client'
 import { Meta, Story } from '@storybook/react'
 import React from 'react'
 
@@ -13,7 +13,7 @@ export const Simple: Story<ThreadListProps> = (args) => (
   <SourceElements
     client={
       new Source(
-        new UserKey(
+        new UserAuthentication(
           'uk_Fp6Mgqk58VHIOPS9kGg6YWRZsVxIp0VjAWygkuxJO3VdfksyYLpx3C4gjrNrIbgWAC0cLLxQX8wWHj8M5xs4JVBXjDD6ntxc',
           false,
         ),

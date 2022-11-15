@@ -1,4 +1,4 @@
-import { Source, UserKey } from '@source-health/client'
+import { Source, UserAuthentication } from '@source-health/client'
 import { Meta, Story } from '@storybook/react'
 import React from 'react'
 
@@ -14,7 +14,7 @@ export const Simple: Story<MessageListProps> = (args) => (
   <SourceElements
     client={
       new Source(
-        new UserKey(
+        new UserAuthentication(
           'uk_SUUqS9xxDJPg0EvGnTHz7nRh8MOYqnOdoeYiWn1dYpCAac1o7pgSGTlBwWcQEohyV54yGHo5QQL3vIeGUBhTQrHGLB1BH2fq',
           true,
         ),
