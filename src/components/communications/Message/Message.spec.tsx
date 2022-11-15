@@ -26,6 +26,7 @@ describe('Message', () => {
     impersonated_by: null,
     attachments: [],
     sent_at: new Date().toISOString(),
+    redacted_at: null,
   }
 
   const outgoingMessage: MessageResource = {
@@ -43,6 +44,7 @@ describe('Message', () => {
     impersonated_by: null,
     attachments: [],
     sent_at: new Date().toISOString(),
+    redacted_at: null,
   }
 
   it('should render a message', async () => {
@@ -103,10 +105,15 @@ describe('Message', () => {
             url: 'https://example.org/test-file',
             url_expires_at: new Date().toISOString(),
             created_at: new Date().toISOString(),
+            variants: {},
           },
+          description: 'Test File.pdf',
+          url: 'https://example.org/test-file',
+          metadata: {},
         },
       ],
       sent_at: new Date().toISOString(),
+      redacted_at: null,
     }
 
     const { container, getByText } = render(<Message message={message} />)

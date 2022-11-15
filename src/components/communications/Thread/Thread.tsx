@@ -7,7 +7,7 @@ import type {
 } from '@source-health/client'
 import React, { FunctionComponent, useCallback, useEffect, useMemo, useReducer } from 'react'
 
-import { useSourceClient } from '../../../context/elements'
+import { useMember, useSourceClient } from '../../../context/elements'
 import { ThreadContext } from '../../../context/thread'
 
 import { threadInitialState, threadReducer } from './reducer'
@@ -26,6 +26,7 @@ export interface ThreadProps {
 
 export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend }) => {
   const client = useSourceClient()
+  const member = useMember()
   const [state, dispatch] = useReducer(threadReducer, threadInitialState)
   const { messages, isLoading, hasMoreMessages } = state
 
@@ -37,25 +38,35 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
         type: 'text',
         thread: id as unknown as Expandable<ThreadResource>,
         text: params.text,
-        sender: {
+        sender: member || {
           object: 'member',
           id: 'mem_test',
           title: null,
-          first_name: 'Test',
+          first_name: '',
           middle_name: null,
-          last_name: 'test',
+          last_name: '',
           preferred_name: '',
           address: null,
-          biological_sex: 'undisclosed',
           email: null,
           date_of_birth: '',
           care_team: '' as unknown as Expandable<CareTeam>,
+          gender_identity: null,
+          sex_at_birth: 'undisclosed',
+          administrative_gender: null,
+          time_zone: null,
+          pronouns: null,
+          phone_numbers: [],
+          profile_image: null,
+          license_region: null,
+          tags: [],
+          enrollment_status: 'enrolled',
           created_at: '',
           updated_at: '',
         },
         sent_at: new Date().toISOString(),
         attachments: [],
         impersonated_by: null,
+        redacted_at: null,
       }
 
       dispatch({
@@ -70,7 +81,7 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
             thread: id,
           },
           {
-            expand: ['sender'],
+            expand: ['sender', 'attachments.resource'],
           },
         )
 
@@ -88,7 +99,7 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
         })
       }
     },
-    [id],
+    [id, member],
   )
 
   const fetchMoreMessages = useCallback(async () => {
@@ -108,7 +119,7 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
         starting_after: oldestMessage.id,
       },
       {
-        expand: ['data.sender'],
+        expand: ['data.sender', 'data.attachments.resource'],
       },
     )
 

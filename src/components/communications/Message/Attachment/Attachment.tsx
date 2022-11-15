@@ -2,7 +2,6 @@ import type { MessageAttachment } from '@source-health/client'
 import React, { FunctionComponent } from 'react'
 
 import { useClassFactory } from '../../../../hooks'
-import { expand } from '../../../../utils'
 
 export interface AttachmentProps {
   /**
@@ -13,7 +12,8 @@ export interface AttachmentProps {
 
 export const Attachment: FunctionComponent<AttachmentProps> = ({ attachment }) => {
   const className = useClassFactory('comms', 'message-attachment')
-  const file = expand(attachment.resource)
+  const url = attachment.url
+  const name = attachment.description ?? url
 
   return (
     <div className={className()}>
@@ -33,8 +33,8 @@ export const Attachment: FunctionComponent<AttachmentProps> = ({ attachment }) =
           strokeLinejoin="round"
         />
       </svg>
-      <a className={className('link')} href={file.url} target="_blank" download>
-        {file.name}
+      <a className={className('link')} href={url} target="_blank" download>
+        {name}
       </a>
     </div>
   )

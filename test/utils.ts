@@ -1,4 +1,4 @@
-import type { Source } from '@source-health/client'
+import type { CareTeam, Expandable, Source } from '@source-health/client'
 import { createElement, FunctionComponent } from 'react'
 
 import { SourceContext } from '../src/context/elements'
@@ -29,6 +29,7 @@ export function createElementsWrapper<T extends MockableTree<Source>>(
     createElement(SourceContext.Provider, {
       value: {
         client: client as any, // eslint-disable-line
+        member: null,
       },
       children,
     })
