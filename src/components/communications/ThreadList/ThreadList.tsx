@@ -82,7 +82,11 @@ export const ThreadList: FunctionComponent<ThreadListProps> = ({
             ...paging,
           },
           {
-            expand: ['data.assignee', 'data.last_message.sender'],
+            expand: [
+              'data.assignee',
+              'data.last_message.sender',
+              'data.last_message.sender.profile_image',
+            ],
           },
         ),
     },

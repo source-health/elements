@@ -1,20 +1,27 @@
+import type { Member } from '@source-health/client'
 import { act, renderHook } from '@testing-library/react-hooks'
 import React, { FunctionComponent } from 'react'
 
 import { createElementsWrapper } from '../../../../test/utils'
 import { useThreadContext } from '../../../context/thread'
 
-import { ThreadProps, Thread } from './Thread'
+import { Thread, ThreadProps } from './Thread'
 
 describe('Thread', () => {
-  const [wrapper, client] = createElementsWrapper({
-    communications: {
-      messages: {
-        list: jest.fn(),
-        create: jest.fn(),
+  const [wrapper, client] = createElementsWrapper(
+    {
+      communications: {
+        messages: {
+          list: jest.fn(),
+          create: jest.fn(),
+        },
       },
     },
-  })
+    {
+      object: 'member',
+      id: 'mem_123',
+    } as Member,
+  )
 
   const ThreadWrapper: FunctionComponent<ThreadProps> = (props) =>
     wrapper({
@@ -53,7 +60,7 @@ describe('Thread', () => {
         thread: 'threadTest',
       },
       {
-        expand: ['data.sender', 'data.attachments.resource'],
+        expand: ['data.sender', 'data.sender.profile_image', 'data.attachments.resource'],
       },
     )
 

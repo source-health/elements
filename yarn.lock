@@ -1638,10 +1638,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@source-health/client@^0.27.1":
-  version "0.27.1"
-  resolved "https://registry.yarnpkg.com/@source-health/client/-/client-0.27.1.tgz#b4aba7161a58a618f43e2cd148ed3bf2f3c4a526"
-  integrity sha512-dTYvKeKlm8c614J8FIF/fKBEhhfZZImb+UM5VTlM33hq/I0IqJVR5+ZnGuuDNQGXcUX/iCeABhknDq5JbmIvXg==
+"@source-health/client@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@source-health/client/-/client-1.3.0.tgz#e2c9016bb0eff1d134f6aaab5e6f6f3013485351"
+  integrity sha512-LcDZly7VZ6SyLEEx+oeY7tz9tVm8JjdptGKa2mQf2CLHY86WYHo3XpZAxF6LxHCSn6dsqtvy7HDVY6/EzulD8A==
   dependencies:
     jose "^3.19.0"
 

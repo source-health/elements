@@ -1,5 +1,5 @@
 import type { Member } from '@source-health/client'
-import { Source, Token } from '@source-health/client'
+import { Source, JWTAuthentication } from '@source-health/client'
 import React, { FunctionComponent, useEffect, useMemo, useState } from 'react'
 
 import { SourceContext, SourceContextValue } from '../context/elements'
@@ -22,7 +22,7 @@ export interface SourceElementsProps {
   /**
    * Provide a token that elements can use to create an API client
    */
-  token: Token
+  token: JWTAuthentication
 
   /**
    * Override the API base URL to pass to the API client
@@ -39,11 +39,11 @@ export const SourceElements: FunctionComponent<
     } else {
       return new Source(rest.token, { baseUrl })
     }
-  }, [(rest as { client: Source }).client || (rest as { token: Token }).token, baseUrl])
+  }, [(rest as { client: Source }).client || (rest as { token: JWTAuthentication }).token, baseUrl])
 
   const [member, setMember] = useState<Member | null>(null)
   useEffect(() => {
-    client.members.retrieve('current').then((member) => {
+    client.members.retrieve('current', { expand: ['profile_image'] }).then((member) => {
       setMember(member)
     })
   }, [client])

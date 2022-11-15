@@ -1,4 +1,4 @@
-import { ApiKey, CareTeam, Expandable, Source } from '@source-health/client'
+import { ApiKeyAuthentication, CareTeam, Expandable, Source } from '@source-health/client'
 import { renderHook } from '@testing-library/react-hooks'
 import React from 'react'
 
@@ -13,7 +13,7 @@ import {
 describe('Elements Context', () => {
   it('should return the context value when mounted', () => {
     const value: SourceContextValue = {
-      client: new Source(new ApiKey('', '')),
+      client: new Source(new ApiKeyAuthentication('', '')),
       member: {
         object: 'member',
         id: 'mem_test',
@@ -36,6 +36,8 @@ describe('Elements Context', () => {
         license_region: null,
         tags: [],
         enrollment_status: 'enrolled',
+        external_identifiers: [],
+        access_level: 'full',
         created_at: '',
         updated_at: '',
       },
@@ -51,7 +53,7 @@ describe('Elements Context', () => {
 
   it('should return the client when mounted', () => {
     const value: SourceContextValue = {
-      client: new Source(new ApiKey('', '')),
+      client: new Source(new ApiKeyAuthentication('', '')),
       member: null,
     }
 
@@ -64,7 +66,7 @@ describe('Elements Context', () => {
 
   it('should return the member when mounted', () => {
     const value: SourceContextValue = {
-      client: new Source(new ApiKey('', '')),
+      client: new Source(new ApiKeyAuthentication('', '')),
       member: {
         object: 'member',
         id: 'mem_test',
@@ -87,6 +89,8 @@ describe('Elements Context', () => {
         license_region: null,
         tags: [],
         enrollment_status: 'enrolled',
+        access_level: 'full',
+        external_identifiers: [],
         created_at: '',
         updated_at: '',
       },

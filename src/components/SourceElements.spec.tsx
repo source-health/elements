@@ -1,4 +1,4 @@
-import { Source, Token } from '@source-health/client'
+import { JWTAuthentication, Source } from '@source-health/client'
 import { renderHook } from '@testing-library/react-hooks'
 import React, { FC } from 'react'
 
@@ -14,7 +14,7 @@ jest.mock('@source-health/client', () => {
         retrieve,
       },
     }),
-    Token: jest.fn(),
+    JWTAuthentication: jest.fn(),
   }
 })
 
@@ -64,7 +64,7 @@ describe('SourceElements', () => {
   })
 
   it('with token should create a context that is made available to other components', async () => {
-    const token = new Token('')
+    const token = new JWTAuthentication('')
     const wrapper: FC<unknown> = ({ children }) => (
       <SourceElements token={token}>{children}</SourceElements>
     )

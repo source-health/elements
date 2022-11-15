@@ -4,6 +4,7 @@ import React, { FunctionComponent } from 'react'
 import { useClassFactory } from '../../../hooks'
 import { Formatter } from '../../../types'
 import { expand } from '../../../utils'
+import { Avatar } from '../../Avatar'
 import { Name } from '../../Name'
 
 import { Attachment } from './Attachment'
@@ -49,7 +50,10 @@ export const Message: FunctionComponent<MessageProps> = ({
       : groupWithPrevious
       ? className('bottom')
       : className('single')
-  const isOutgoing = expand(message.sender).id.startsWith('mem_')
+  const sender = expand(message.sender)
+  const isOutgoing = sender?.id.startsWith('mem_')
+  const senderPhoto =
+    sender?.object === 'api_key' ? null : sender.profile_image ? expand(sender.profile_image) : null
   const directionClassName = className(isOutgoing ? 'outgoing' : 'incoming')
   const classNamesList = [className(), groupClassName, directionClassName]
   if (message.redacted_at) {
@@ -60,9 +64,9 @@ export const Message: FunctionComponent<MessageProps> = ({
 
   return (
     <div className={classNames}>
-      {/* <div className={className('image')}>
-        <Avatar size={32} />
-      </div> */}
+      <div className={className('image')}>
+        <Avatar size={32} file={senderPhoto} />
+      </div>
       <div className={className('container')}>
         <div className={className('contents')}>
           <div className={className('content')}>{message.text}</div>
