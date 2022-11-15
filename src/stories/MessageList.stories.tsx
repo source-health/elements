@@ -8,20 +8,17 @@ import { MessageInput } from '../components/communications/MessageInput'
 export default {
   title: 'Components/Message List',
   component: MessageList,
+  argTypes: {
+    apiKey: { control: 'text' },
+  },
 } as Meta
 
-export const Simple: Story<MessageListProps> = (args) => (
+export const Simple: Story<MessageListProps & { apiKey?: string }> = (args) => (
   <SourceElements
     client={
-      new Source(
-        new UserAuthentication(
-          'uk_SUUqS9xxDJPg0EvGnTHz7nRh8MOYqnOdoeYiWn1dYpCAac1o7pgSGTlBwWcQEohyV54yGHo5QQL3vIeGUBhTQrHGLB1BH2fq',
-          true,
-        ),
-        {
-          baseUrl: 'http://localhost:3000',
-        },
-      )
+      new Source(new UserAuthentication(args.apiKey ?? '', true), {
+        baseUrl: 'http://localhost:3000',
+      })
     }
   >
     <Thread id="thrd_LyBsSYXNXfqzMsPObitv">
