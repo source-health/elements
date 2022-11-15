@@ -1,6 +1,7 @@
 import React, { ComponentType, FunctionComponent, useRef } from 'react'
 
 import { useThreadContext } from '../../../context/thread'
+import { AvatarProps } from '../../Avatar'
 import { LoadingErrorProps, LoadingProps } from '../../Loading'
 import { InfiniteScrollPaginator, InfiniteScrollPaginatorProps } from '../../Paginator'
 import { Message, MessageProps } from '../Message'
@@ -17,6 +18,11 @@ export interface MessageListProps {
    * - function, overriding how messages are grouped
    */
   shouldGroupMessages?: boolean | IsGroupedCallback
+
+  /**
+   * Component that is responsible for rendering user avatars
+   */
+  AvatarComponent?: ComponentType<AvatarProps>
 
   /**
    * Custom component to use when rendering a message
@@ -44,6 +50,7 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
   LoadingComponent,
   PaginatorComponent: Paginator = InfiniteScrollPaginator,
   MessageComponent = Message,
+  AvatarComponent,
 }) => {
   const listRef = useRef<HTMLDivElement>(null)
   const { messages, isLoading, hasMoreMessages, fetchMoreMessages } = useThreadContext()
@@ -76,6 +83,7 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
             message={message}
             groupWithPrevious={groupingFunction(messages[i - 1], message)}
             groupWithNext={groupingFunction(message, messages[i + 1])}
+            AvatarComponent={AvatarComponent}
           />
         ))}
       </Paginator>

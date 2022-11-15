@@ -1,10 +1,10 @@
 import type { Message as MessageResource } from '@source-health/client'
-import React, { FunctionComponent } from 'react'
+import React, { ComponentType, FunctionComponent } from 'react'
 
 import { useClassFactory } from '../../../hooks'
 import { Formatter } from '../../../types'
 import { expand } from '../../../utils'
-import { Avatar } from '../../Avatar'
+import { Avatar, AvatarProps } from '../../Avatar'
 import { Name } from '../../Name'
 
 import { Attachment } from './Attachment'
@@ -29,6 +29,11 @@ export interface MessageProps {
    * Custom function to format a date into a string
    */
   formatTimestamp?: Formatter<Date, string>
+
+  /**
+   * Component that is responsible for rendering user avatars
+   */
+  AvatarComponent?: ComponentType<AvatarProps>
 }
 
 const defaultDateFormatter = new Intl.DateTimeFormat('en-US', {
@@ -40,6 +45,7 @@ export const Message: FunctionComponent<MessageProps> = ({
   groupWithPrevious,
   groupWithNext,
   message,
+  AvatarComponent = Avatar,
 }) => {
   const className = useClassFactory('comms', 'message')
   const groupClassName =
@@ -65,7 +71,7 @@ export const Message: FunctionComponent<MessageProps> = ({
   return (
     <div className={classNames}>
       <div className={className('image')}>
-        <Avatar size={32} file={senderPhoto} />
+        <AvatarComponent size={32} file={senderPhoto} />
       </div>
       <div className={className('container')}>
         <div className={className('contents')}>

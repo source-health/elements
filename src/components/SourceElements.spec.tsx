@@ -60,7 +60,7 @@ describe('SourceElements', () => {
     expect(result.current.client).not.toBeNull()
     expect(result.current.member).toBe(member)
     expect(retrieve).toHaveBeenCalledTimes(1)
-    expect(retrieve).toHaveBeenCalledWith('current')
+    expect(retrieve).toHaveBeenCalledWith('current', { expand: ['profile_image'] })
   })
 
   it('with token should create a context that is made available to other components', async () => {
@@ -76,6 +76,6 @@ describe('SourceElements', () => {
     expect(result.current.client).not.toBeNull()
     expect(result.current.member).toBe(member)
     expect(retrieve).toHaveBeenCalledTimes(1)
-    expect(retrieve).toHaveBeenCalledWith('current')
+    expect(retrieve).toHaveBeenCalledWith('current', { expand: ['profile_image'] })
   })
 })
