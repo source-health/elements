@@ -1,5 +1,6 @@
 import type {
   Expandable,
+  File,
   Message,
   MessageCreateParams,
   Thread as ThreadResource,
@@ -47,9 +48,16 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
         to: null,
         from: null,
         direction: 'inbound',
-        status: 'sent',
+        status: 'pending',
         sent_at: new Date().toISOString(),
-        attachments: [],
+        attachments:
+          params.attachments?.map((attachment) => ({
+            type: attachment.type,
+            description: attachment.description ?? null,
+            url: attachment.url ?? '',
+            metadata: attachment.metadata ?? {},
+            resource: (attachment.resource ?? null) as Expandable<File> | null,
+          })) ?? [],
         impersonated_by: null,
         redacted_at: null,
       }
