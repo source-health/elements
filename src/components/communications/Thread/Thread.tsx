@@ -1,13 +1,8 @@
-import type {
-  Expandable,
-  Message,
-  MessageCreateParams,
-  Thread as ThreadResource,
-} from '@source-health/client'
+import type { Expandable, Message, Thread as ThreadResource } from '@source-health/client'
 import React, { FunctionComponent, useCallback, useEffect, useMemo, useReducer } from 'react'
 
 import { useMember, useSourceClient } from '../../../context/elements'
-import { ThreadContext } from '../../../context/thread'
+import { MessageCreateInputs, ThreadContext } from '../../../context/thread'
 
 import { threadInitialState, threadReducer } from './reducer'
 
@@ -30,7 +25,7 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
   const { messages, isLoading, hasMoreMessages } = state
 
   const sendMessage = useCallback(
-    async (params: Omit<MessageCreateParams, 'thread'>) => {
+    async (params: MessageCreateInputs) => {
       if (!member) {
         return
       }
@@ -47,9 +42,16 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
         to: null,
         from: null,
         direction: 'inbound',
-        status: 'sent',
+        status: 'pending',
         sent_at: new Date().toISOString(),
-        attachments: [],
+        attachments:
+          params.attachments?.map((attachment) => ({
+            type: 'file',
+            description: attachment.file.name,
+            url: attachment.file.url,
+            metadata: attachment.metadata ?? {},
+            resource: attachment.file,
+          })) ?? [],
         impersonated_by: null,
         redacted_at: null,
       }
@@ -62,8 +64,14 @@ export const Thread: FunctionComponent<ThreadProps> = ({ id, children, onSend })
       try {
         const created = await client.communications.messages.create(
           {
-            ...params,
+            text: params.text,
             thread: id,
+            attachments:
+              params.attachments?.map((attachment) => ({
+                type: 'file',
+                resource: attachment.file.id,
+                metadata: attachment.metadata ?? {},
+              })) ?? [],
           },
           {
             expand: ['sender', 'sender.profile_image', 'attachments.resource'],
